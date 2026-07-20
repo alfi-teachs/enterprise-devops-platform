@@ -413,9 +413,33 @@ git add .
 ```bash
 git commit -m "Add initial project files"
 ```
+---------------------------------------------------------------
 
----
+## After updating index.html and style.css, use these commands to save
+```bash
+# Check the current status
+git status
+```
 
+```bash
+# Stage all changes
+git add .
+```
+
+```bash
+# Create a commit
+git commit -m "Add HTML structure and CSS styling for web application"
+```
+
+```bash
+# Push the changes to GitHub
+git push
+```
+
+```bash
+# Verify the repository is clean
+git status
+```
 ## Step 16 - Push to GitHub
 
 ```bash
