@@ -445,3 +445,29 @@ git status
 ```bash
 git push
 ```
+------------------------------------
+## Phase 3 Completed
+
+### Files created in the app directory and added content and pushed to github
+### step 1
+
+app/
+├── app.js
+├── index.html
+├── nginx.conf
+└── style.css
+
+The web application is now ready to be served by Nginx and containerized with Docker in the next phase.
+
+## Step 2 - Open the Application
+
+If using VS Code with the Live Server extension:
+
+Right-click index.html
+Select Open with Live Server
+
+The application will open in your browser.
+
+Example URL:
+
+http://127.0.0.1:5500
