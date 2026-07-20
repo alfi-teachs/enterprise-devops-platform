@@ -475,6 +475,7 @@ http://127.0.0.1:5500
 
 ---------------------------
 # phase 4 
+
 ## Step 1: Go to docker folder
 
 From project root:
@@ -488,6 +489,7 @@ Open:
 touch Dockerfile
 ```
 ### Step 3: Dockerfile content
+
 ### Step 4: Build Docker image
 ```bash
 docker build -t enterprise-devops-app:v1 .
@@ -496,7 +498,8 @@ Check image:
 ```
 docker images
 ```
-You should see:
+### You should see:
+
 enterprise-devops-app   v1
 nginx                   latest
 
@@ -508,7 +511,7 @@ Check:
 ```bash
 docker ps
 ```
-Step 7: Open browser
+### Step 6 : Open browser
 
 Go to:
 ```bash
