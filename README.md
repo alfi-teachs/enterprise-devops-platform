@@ -489,10 +489,16 @@ Open:
 touch Dockerfile
 ```
 ### Step 3: Dockerfile content
+go to root
+```bash
+pwd
+```
+### Expected:
+/c/project/enterprise-devops-platform
 
 ### Step 4: Build Docker image
 ```bash
-docker build -t enterprise-devops-app:v1 .
+docker build -t enterprise-devops-app:v1 -f docker/Dockerfile .
 ```
 Check image:
 ```
