@@ -1,7 +1,8 @@
 
 # Enterprise DevOps Platform - Project Setup
+# Git Setup and Push to GitHub
 
-## Step 1: Create the Project Directory
+## 1. Create the Project
 
 ```bash
 mkdir enterprise-devops-platform
@@ -10,7 +11,7 @@ cd enterprise-devops-platform
 
 ---
 
-## Step 2: Create the Project Structure
+## 2. Create the Project Directories
 
 ```bash
 mkdir ansible
@@ -28,7 +29,7 @@ mkdir terraform
 
 ---
 
-## Step 3: Verify the Directory Structure
+## 3. Verify the Directory Structure
 
 ```bash
 cmd //c tree
@@ -53,7 +54,7 @@ enterprise-devops-platform
 
 ---
 
-## Step 4: Initialize Git Repository
+## 4. Initialize Git
 
 ```bash
 git init
@@ -61,21 +62,45 @@ git init
 
 ---
 
-## Step 5: Check Current Branch
+## 5. Check Git Status
 
 ```bash
-git branch
+git status
 ```
 
 Output
 
 ```text
-* master
+On branch master
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+```
+
+Git does not track empty folders. It only tracks files.
+
+---
+
+## 6. Create Placeholder Files
+
+```bash
+touch ansible/.gitkeep
+touch app/.gitkeep
+touch docker/.gitkeep
+touch docs/.gitkeep
+touch github-actions/.gitkeep
+touch images/.gitkeep
+touch jenkins/.gitkeep
+touch kubernetes/.gitkeep
+touch monitoring/.gitkeep
+touch scripts/.gitkeep
+touch terraform/.gitkeep
 ```
 
 ---
 
-## Step 6: Check Repository Status
+## 7. Check Git Status Again
 
 ```bash
 git status
@@ -83,7 +108,7 @@ git status
 
 ---
 
-## Step 7: Add All Files
+## 8. Add Files to Git
 
 ```bash
 git add .
@@ -91,7 +116,7 @@ git add .
 
 ---
 
-## Step 8: Create Initial Commit
+## 9. Commit the Changes
 
 ```bash
 git commit -m "Initial project structure"
@@ -99,13 +124,21 @@ git commit -m "Initial project structure"
 
 ---
 
-## Step 9: Connect Local Repository to GitHub
+## 10. Check Commit History
+
+```bash
+git log --oneline
+```
+
+---
+
+## 11. Add GitHub Remote
 
 ```bash
 git remote add origin git@github.com:alfi-teachs/enterprise-devops-platform.git
 ```
 
-Verify
+Verify:
 
 ```bash
 git remote -v
@@ -120,15 +153,27 @@ origin  git@github.com:alfi-teachs/enterprise-devops-platform.git (push)
 
 ---
 
-## Step 10: Push the Repository
-
-If using the **master** branch:
+## 12. Rename Local Branch to Main
 
 ```bash
-git push -u origin master
+git branch -M main
 ```
 
-If using the **main** branch:
+Verify
+
+```bash
+git branch
+```
+
+Output
+
+```text
+* main
+```
+
+---
+
+## 13. Push the Repository
 
 ```bash
 git push -u origin main
@@ -136,19 +181,75 @@ git push -u origin main
 
 ---
 
-## Final Project Structure
+## 14. Future Pushes
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push
+```
+
+---
+
+# Useful Git Commands
+
+## Check Repository Status
+
+```bash
+git status
+```
+
+## View Commit History
+
+```bash
+git log --oneline
+```
+
+## View Branches
+
+```bash
+git branch
+```
+
+## View Remote Repository
+
+```bash
+git remote -v
+```
+
+## Check Git Username
+
+```bash
+git config --global user.name
+```
+
+## Check Git Email
+
+```bash
+git config --global user.email
+```
+
+## Change Git Username
+
+```bash
+git config --global user.name "YOUR_USERNAME"
+```
+
+## Change Git Email
+
+```bash
+git config --global user.email "YOUR_EMAIL@example.com"
+```
+
+## Test GitHub SSH Authentication
+
+```bash
+ssh -T git@github.com
+```
+
+Expected Output
 
 ```text
-enterprise-devops-platform/
-├── ansible/
-├── app/
-├── docker/
-├── docs/
-├── github-actions/
-├── images/
-├── jenkins/
-├── kubernetes/
-├── monitoring/
-├── scripts/
-└── terraform/
+Hi YOUR_USERNAME! You've successfully authenticated, but GitHub does not provide shell access.
+```
 ```
