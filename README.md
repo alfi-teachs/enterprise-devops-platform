@@ -255,6 +255,9 @@ Hi YOUR_USERNAME! You've successfully authenticated, but GitHub does not provide
 ```
 ```
 ```bash
+ cmd //c tree
+```
+
 ------------------------------------------------
 
 # Phase 2 - Create the Project Files
