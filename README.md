@@ -556,7 +556,7 @@ kubernetes/
 ├── ingress.yaml
 └── hpa.yaml
 ```
-
+### Deploy on your Minikube cluster first.
 
 
 
