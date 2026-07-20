@@ -472,3 +472,45 @@ The application will open in your browser.
 Example URL:
 
 http://127.0.0.1:5500
+
+---------------------------
+# phase 4 
+## Step 1: Go to docker folder
+
+From project root:
+```bash
+cd docker
+```
+### Step 2: Create Dockerfile
+
+Open:
+```bash
+touch Dockerfile
+```
+### Step 3: Dockerfile content
+### Step 4: Build Docker image
+```bash
+docker build -t enterprise-devops-app:v1 .
+```
+Check image:
+```
+docker images
+```
+You should see:
+enterprise-devops-app   v1
+nginx                   latest
+
+### Step 5: Run container
+```bash
+docker run -d -p 8080:80 --name devops-app enterprise-devops-app:v1
+```
+Check:
+```bash
+docker ps
+```
+Step 7: Open browser
+
+Go to:
+```bash
+http://localhost:8080
+```
