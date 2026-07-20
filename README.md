@@ -254,3 +254,167 @@ Expected Output
 Hi YOUR_USERNAME! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 ```
+```bash
+------------------------------------------------
+
+# Phase 2 - Create the Project Files
+
+## Step 1 - Remove Placeholder Files
+
+```bash
+rm app/.gitkeep
+rm docker/.gitkeep
+rm terraform/.gitkeep
+rm ansible/.gitkeep
+rm kubernetes/.gitkeep
+rm jenkins/.gitkeep
+rm monitoring/.gitkeep
+rm scripts/.gitkeep
+rm docs/.gitkeep
+rm images/.gitkeep
+rm github-actions/.gitkeep
+```
+
+---
+
+## Step 2 - Remove GitHub Actions Directory
+
+```bash
+rm -rf github-actions
+```
+
+---
+
+## Step 3 - Create Application Files
+
+```bash
+touch app/index.html
+touch app/style.css
+touch app/app.js
+touch app/nginx.conf
+```
+
+---
+
+## Step 4 - Create Docker Files
+
+```bash
+touch docker/Dockerfile
+touch docker/docker-compose.yml
+```
+
+---
+
+## Step 5 - Create Terraform Files
+
+```bash
+touch terraform/providers.tf
+touch terraform/variables.tf
+touch terraform/main.tf
+touch terraform/outputs.tf
+touch terraform/terraform.tfvars
+```
+
+---
+
+## Step 6 - Create Ansible Files
+
+```bash
+touch ansible/inventory
+touch ansible/install-docker.yml
+touch ansible/install-kubernetes.yml
+touch ansible/deploy-app.yml
+```
+
+---
+
+## Step 7 - Create Kubernetes Files
+
+```bash
+touch kubernetes/namespace.yaml
+touch kubernetes/deployment.yaml
+touch kubernetes/service.yaml
+touch kubernetes/configmap.yaml
+touch kubernetes/secret.yaml
+touch kubernetes/ingress.yaml
+touch kubernetes/hpa.yaml
+```
+
+---
+
+## Step 8 - Create Jenkins Pipeline
+
+```bash
+touch jenkins/Jenkinsfile
+```
+
+---
+
+## Step 9 - Create Monitoring Files
+
+```bash
+touch monitoring/prometheus.yaml
+touch monitoring/grafana.yaml
+touch monitoring/alertmanager.yaml
+```
+
+---
+
+## Step 10 - Create Shell Scripts
+
+```bash
+touch scripts/build.sh
+touch scripts/deploy.sh
+touch scripts/cleanup.sh
+touch scripts/backup.sh
+```
+
+---
+
+## Step 11 - Create Documentation Files
+
+```bash
+touch docs/architecture.md
+touch docs/setup.md
+touch docs/troubleshooting.md
+```
+
+---
+
+## Step 12 - Verify the Files
+
+```bash
+git ls-files
+```
+
+---
+
+## Step 13 - Check the Project Structure
+
+```bash
+find .
+```
+
+---
+
+## Step 14 - Stage the Changes
+
+```bash
+git add .
+```
+
+---
+
+## Step 15 - Commit the Changes
+
+```bash
+git commit -m "Add initial project files"
+```
+
+---
+
+## Step 16 - Push to GitHub
+
+```bash
+git push
+```
