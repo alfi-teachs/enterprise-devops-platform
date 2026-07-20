@@ -96,6 +96,7 @@ touch kubernetes/.gitkeep
 touch monitoring/.gitkeep
 touch scripts/.gitkeep
 touch terraform/.gitkeep
+touch .gitignore
 ```
 
 ---
