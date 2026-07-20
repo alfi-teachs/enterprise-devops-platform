@@ -449,6 +449,7 @@ git push
 ## Phase 3 Completed
 
 ### Files created in the app directory and added content and pushed to github
+
 ### step 1
 
 app/
@@ -459,7 +460,7 @@ app/
 
 The web application is now ready to be served by Nginx and containerized with Docker in the next phase.
 
-## Step 2 - Open the Application
+### Step 2 - Open the Application
 
 If using VS Code with the Live Server extension:
 
