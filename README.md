@@ -743,6 +743,8 @@ inside BusyBox.
 ### Phase 14 – Watch Scale Down
 
 After the stabilization period:
+```bash
+
 5
 
 ↓
