@@ -608,8 +608,15 @@ Verify:
 kubectl get secret -n enterprise-devops
 kubectl describe secret enterprise-secret -n enterprise-devops
 ```
+### Phase 5 – Create Deployment
+Your Deployment includes:
+- Namespace
+- Image
+- ConfigMap
+- Secret
+- CPU requests/limits (required for HPA)
 
-
+Apply:
 
 
 
