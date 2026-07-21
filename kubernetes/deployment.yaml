@@ -3,8 +3,10 @@ kind: Deployment
 
 metadata:
   name: enterprise-devops-app
+  namespace: enterprise-devops
   labels:
     app: enterprise-devops-app
+
 spec:
   replicas: 1
 
@@ -20,6 +22,54 @@ spec:
     spec:
       containers:
         - name: enterprise-devops-app
-          image: alfi-teachs/enterprise-devops-app:v1
+          image: alskill/enterprise-devops-app:v1
+
           ports:
             - containerPort: 80
+          resources:
+              requests:
+                cpu: "100m"
+                memory: "128Mi"
+
+              limits:
+                cpu: "500m"
+                memory: "512Mi"  
+
+          env:
+            # ConfigMap
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: enterprise-config
+                  key: APP_NAME
+
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: enterprise-config
+                  key: APP_ENV
+
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: enterprise-config
+                  key: LOG_LEVEL
+
+            # Secret
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: enterprise-secret
+                  key: DB_USERNAME
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: enterprise-secret
+                  key: DB_PASSWORD
+
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: enterprise-secret
+                  key: API_KEY

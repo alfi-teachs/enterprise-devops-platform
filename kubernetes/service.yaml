@@ -3,6 +3,7 @@ kind: Service
 
 metadata:
   name: enterprise-devops-app
+  namespace: enterprise-devops
 
 spec:
   type: NodePort
@@ -14,4 +15,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30471
+      nodePort: 30472
+      
