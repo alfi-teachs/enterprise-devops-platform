@@ -558,6 +558,47 @@ kubernetes/
 ```
 ### Deploy on your Minikube cluster first.
 
+### Kubernetes HPA (Horizontal Pod Autoscaler) Lab
+Phase 1 – Prerequisites
+Start Minikube:
+```bash
+minikube start
+```
+```bash
+kubectl get nodes
+```
+Expected:
+```bash
+NAME           STATUS   ROLES
+minikube       Ready    control-plane
+minikube-m02   Ready
+minikube-m03   Ready
+```
+### Phase 2 – Create Namespace
+
+namespace.yaml
+Apply:
+```bash
+kubectl apply -f namespace.yaml
+```
+Verify:
+```bash
+kubectl get ns
+```
+### Phase 3 – Create ConfigMap
+
+configmap.yaml
+Apply:
+```bash
+kubectl apply -f configmap.yaml
+```
+Verify:
+```bash
+kubectl get configmap -n enterprise-devops
+kubectl describe configmap enterprise-config -n enterprise-devops
+```
+
+
 
 
 
