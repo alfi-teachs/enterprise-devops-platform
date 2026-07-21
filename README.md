@@ -617,7 +617,35 @@ Your Deployment includes:
 - CPU requests/limits (required for HPA)
 
 Apply:
-
+```bash
+kubectl apply -f deployment.yaml
+```
+Verify:
+```bash
+kubectl get deployment -n enterprise-devops
+kubectl get pods -n enterprise-devops
+```
+### Phase 6 – Create Service
+service.yaml
+type: NodePort
+Apply:
+```bash
+kubectl apply -f service.yaml
+```
+Verify:
+```bash
+kubectl get svc -n enterprise-devops
+kubectl get endpoints -n enterprise-devops
+```
+Open the application:
+```bash
+minikube service enterprise-devops-app -n enterprise-devops
+```
+### Phase 7 – Enable Metrics Server
+Check:
+```bash
+minikube addons list
+```
 
 
 
