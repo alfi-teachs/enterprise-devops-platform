@@ -641,6 +641,59 @@ Open the application:
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops
 ```
+## Ingress Setup (Production Style)
+### Step 6: Install Nginx Ingress Controller
+Enable:
+```bash
+minikube addons enable ingress
+```
+Check:
+```bash
+kubectl get pods -n ingress-nginx
+```
+Expected:
+```bash
+ingress-nginx-controller   Running
+```
+### Step 7: Create Ingress YAML
+
+ingress.yaml
+Apply:
+```bash
+kubectl apply -f ingress.yaml
+```
+### Step 8: Check Ingress
+```bash
+kubectl get ingress -n enterprise-devops
+```
+Example:
+```bash
+NAME                 HOSTS
+enterprise-ingress   enterprise.local
+```
+Detailed:
+```bash
+kubectl describe ingress enterprise-ingress -n enterprise-devops
+```
+### Step 9: Configure Local DNS
+
+Get Minikube IP:
+```bash
+192.168.49.2
+```
+### Step 10: Open Browser
+
+Now access:
+```bash
+minikube ip
+```
+
+
+
+
+
+
+```
 ### Phase 7 – Enable Metrics Server
 Check:
 ```bash
