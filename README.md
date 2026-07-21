@@ -558,7 +558,211 @@ kubernetes/
 ```
 ### Deploy on your Minikube cluster first.
 
+### Kubernetes HPA (Horizontal Pod Autoscaler) Lab
+Phase 1 – Prerequisites
+Start Minikube:
+```bash
+minikube start
+```
+```bash
+kubectl get nodes
+```
+Expected:
+```bash
+NAME           STATUS   ROLES
+minikube       Ready    control-plane
+minikube-m02   Ready
+minikube-m03   Ready
+```
+### Phase 2 – Create Namespace
 
+namespace.yaml
+Apply:
+```bash
+kubectl apply -f namespace.yaml
+```
+Verify:
+```bash
+kubectl get ns
+```
+### Phase 3 – Create ConfigMap
+
+configmap.yaml
+Apply:
+```bash
+kubectl apply -f configmap.yaml
+```
+Verify:
+```bash
+kubectl get configmap -n enterprise-devops
+kubectl describe configmap enterprise-config -n enterprise-devops
+```
+## Phase 4 – Create Secret
+secret.yaml
+Apply:
+```bash
+kubectl apply -f secret.yaml
+```
+Verify:
+```bash
+kubectl get secret -n enterprise-devops
+kubectl describe secret enterprise-secret -n enterprise-devops
+```
+### Phase 5 – Create Deployment
+Your Deployment includes:
+- Namespace
+- Image
+- ConfigMap
+- Secret
+- CPU requests/limits (required for HPA)
+
+Apply:
+```bash
+kubectl apply -f deployment.yaml
+```
+Verify:
+```bash
+kubectl get deployment -n enterprise-devops
+kubectl get pods -n enterprise-devops
+```
+### Phase 6 – Create Service
+service.yaml
+type: NodePort
+Apply:
+```bash
+kubectl apply -f service.yaml
+```
+Verify:
+```bash
+kubectl get svc -n enterprise-devops
+kubectl get endpoints -n enterprise-devops
+```
+Open the application:
+```bash
+minikube service enterprise-devops-app -n enterprise-devops
+```
+### Phase 7 – Enable Metrics Server
+Check:
+```bash
+minikube addons list
+```
+Enable if needed:
+```bash
+minikube addons enable metrics-server
+```
+Verify
+```bash
+kubectl top nodes
+kubectl top pods -n enterprise-devops
+```
+If these commands return CPU and memory values, Metrics Server is working.
+
+### Phase 8 – Add CPU Requests and Limits
+HPA needs this in the Deployment
+Apply:
+```bash
+kubectl apply -f deployment.yaml
+```
+### Phase 9 – Create HPA
+hpa.yaml
+Apply:
+```bash
+kubectl apply -f hpa.yaml
+```
+Verify:
+```bash
+kubectl get hpa -n enterprise-devops
+```
+Initially:
+```bash
+cpu: 28%/70%
+Replicas: 2
+```
+### Phase 10 – Watch HPA
+
+Terminal 1
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+Terminal 2
+```bash
+kubectl get deployment -n enterprise-devops -w
+```
+Terminal 3
+```bash
+kubectl get pods -n enterprise-devops -w
+```
+### Phase 11 – Generate Load
+
+Since you're using Git Bash, disable path conversion:
+```bash
+MSYS_NO_PATHCONV=1 kubectl run load-generator --image=busybox --restart=Never -it --rm -- sh
+```
+Inside BusyBox:
+```bash
+while true; do
+  wget -q -O- http://enterprise-devops-app.enterprise-devops.svc.cluster.local
+done
+```
+### Phase 12 – Observe Scaling
+
+Example:
+```bash
+Replicas
+
+2
+
+3
+
+4
+
+5
+
+```
+Pods:
+```bash
+enterprise-devops-app-xxxxx Running
+enterprise-devops-app-yyyyy Running
+enterprise-devops-app-zzzzz Running
+enterprise-devops-app-aaaaa Running
+enterprise-devops-app-bbbbb Running
+```
+Deployment:
+```bash
+READY
+
+5/5
+```
+### Phase 13 – Stop Load
+Press:
+```bash
+Ctrl + C
+```
+inside BusyBox.
+
+### Phase 14 – Watch Scale Down
+
+After the stabilization period:
+```bash
+
+5
+
+↓
+
+4
+
+↓
+
+3
+
+↓
+
+2
+```
+It won't go below 2 because:
+```bash
+minReplicas: 2
+```
 
 
 
