@@ -657,6 +657,70 @@ kubectl top pods -n enterprise-devops
 ```
 If these commands return CPU and memory values, Metrics Server is working.
 
+### Phase 8 – Add CPU Requests and Limits
+HPA needs this in the Deployment
+Apply:
+```bash
+kubectl apply -f deployment.yaml
+```
+### Phase 9 – Create HPA
+hpa.yaml
+Apply:
+```bash
+kubectl apply -f hpa.yaml
+```
+Verify:
+```bash
+kubectl get hpa -n enterprise-devops
+```
+Initially:
+```bash
+cpu: 28%/70%
+Replicas: 2
+```
+### Phase 10 – Watch HPA
+
+Terminal 1
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+Terminal 2
+```bash
+kubectl get deployment -n enterprise-devops -w
+```
+Terminal 3
+```bash
+kubectl get pods -n enterprise-devops -w
+```
+### Phase 11 – Generate Load
+
+Since you're using Git Bash, disable path conversion:
+```bash
+MSYS_NO_PATHCONV=1 kubectl run load-generator --image=busybox --restart=Never -it --rm -- sh
+```
+Inside BusyBox:
+```bash
+while true; do
+  wget -q -O- http://enterprise-devops-app.enterprise-devops.svc.cluster.local
+done
+```
+### Phase 12 – Observe Scaling
+
+Example:
+```bash
+Replicas
+
+2
+
+3
+
+4
+
+5
+
+```
+
+
 
 
 
