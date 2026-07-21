@@ -646,6 +646,16 @@ Check:
 ```bash
 minikube addons list
 ```
+Enable if needed:
+```bash
+minikube addons enable metrics-server
+```
+Verify
+```bash
+kubectl top nodes
+kubectl top pods -n enterprise-devops
+```
+If these commands return CPU and memory values, Metrics Server is working.
 
 
 
