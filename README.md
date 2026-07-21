@@ -523,3 +523,56 @@ Go to:
 ```bash
 http://localhost:8080
 ```
+--------------------------------------
+# Phase 5 - Docker Hub
+
+We will:
+
+Create Docker Hub repository.
+Login from terminal.
+Tag image.
+
+```bash
+docker login
+```
+Tag:
+```bash
+docker tag enterprise-devops-app:v1 YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
+```
+Push:
+```bash
+docker push YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
+```
+----------------------------------
+# Phase 6 - Kubernetes
+
+We will use your existing:
+```bash
+kubernetes/
+├── deployment.yaml
+├── service.yaml
+├── configmap.yaml
+├── secret.yaml
+├── ingress.yaml
+└── hpa.yaml
+```
+### Deploy on your Minikube cluster first.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
