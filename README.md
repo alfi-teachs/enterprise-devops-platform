@@ -474,7 +474,7 @@ Example URL:
 http://127.0.0.1:5500
 
 ---------------------------
-# phase 4 
+# Phase 4 
 
 ## Step 1: Go to docker folder
 
