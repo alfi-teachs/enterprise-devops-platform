@@ -719,6 +719,49 @@ Replicas
 5
 
 ```
+Pods:
+```bash
+enterprise-devops-app-xxxxx Running
+enterprise-devops-app-yyyyy Running
+enterprise-devops-app-zzzzz Running
+enterprise-devops-app-aaaaa Running
+enterprise-devops-app-bbbbb Running
+```
+Deployment:
+```bash
+READY
+
+5/5
+```
+### Phase 13 – Stop Load
+Press:
+```bash
+Ctrl + C
+```
+inside BusyBox.
+
+### Phase 14 – Watch Scale Down
+
+After the stabilization period:
+5
+
+↓
+
+4
+
+↓
+
+3
+
+↓
+
+2
+```
+It won't go below 2 because:
+```bash
+minReplicas: 2
+```
+
 
 
 
