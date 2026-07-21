@@ -597,8 +597,17 @@ Verify:
 kubectl get configmap -n enterprise-devops
 kubectl describe configmap enterprise-config -n enterprise-devops
 ```
-
-
+## Phase 4 – Create Secret
+secret.yaml
+Apply:
+```bash
+kubectl apply -f secret.yaml
+```
+Verify:
+```bash
+kubectl get secret -n enterprise-devops
+kubectl describe secret enterprise-secret -n enterprise-devops
+```
 
 
 
