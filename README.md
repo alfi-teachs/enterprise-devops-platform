@@ -559,7 +559,7 @@ kubernetes/
 ### Deploy on your Minikube cluster first.
 
 ### Kubernetes HPA (Horizontal Pod Autoscaler) Lab
-Phase 1 – Prerequisites
+### Phase 1 – Prerequisites
 Start Minikube:
 ```bash
 minikube start
@@ -641,8 +641,10 @@ Open the application:
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops
 ```
+--------------------------------------
+### phase 7
 ## Ingress Setup (Production Style)
-### Step 6: Install Nginx Ingress Controller
+### Step 1: Install Nginx Ingress Controller
 Enable:
 ```bash
 minikube addons enable ingress
@@ -655,14 +657,14 @@ Expected:
 ```bash
 ingress-nginx-controller   Running
 ```
-### Step 7: Create Ingress YAML
+### Step 2: Create Ingress YAML
 
 ingress.yaml
 Apply:
 ```bash
 kubectl apply -f ingress.yaml
 ```
-### Step 8: Check Ingress
+### Step 3: Check Ingress
 ```bash
 kubectl get ingress -n enterprise-devops
 ```
@@ -675,26 +677,19 @@ Detailed:
 ```bash
 kubectl describe ingress enterprise-ingress -n enterprise-devops
 ```
-### Step 9: Configure Local DNS
+### Step 4: Configure Local DNS
 
 Get Minikube IP:
 ```bash
 192.168.49.2
 ```
-### Step 10: Open Browser
+### Step 5: Open Browser
 
 Now access:
 ```bash
 minikube ip
 ```
-
-
-
-
-
-
-```
-### Phase 7 – Enable Metrics Server
+#### step 6: Enable Metrics Server
 Check:
 ```bash
 minikube addons list
@@ -706,16 +701,19 @@ minikube addons enable metrics-server
 Verify
 ```bash
 kubectl top nodes
+```
+```bash
 kubectl top pods -n enterprise-devops
 ```
 If these commands return CPU and memory values, Metrics Server is working.
 
-### Phase 8 – Add CPU Requests and Limits
+### step 7:  – Add CPU Requests and Limits
 HPA needs this in the Deployment
 Apply:
 ```bash
 kubectl apply -f deployment.yaml
 ```
+--------------------------------------------------------------
 ### Phase 9 – Create HPA
 hpa.yaml
 Apply:
@@ -816,7 +814,7 @@ It won't go below 2 because:
 ```bash
 minReplicas: 2
 ```
-
+--------------------------------------
 
 
 
