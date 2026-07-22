@@ -918,10 +918,36 @@ to leave the container.
 
 ### Step 6 – Check Jenkins Version
 On the Jenkins Dashboard:
+
 Go to: 
 ```bash
 Manage Jenkins
 ```
+Go to:
+```bash
+Manage Jenkins → Plugins
+```
+(If your Jenkins version shows Manage Plugins, that's fine too.)
+
+### Step 7 – Install Required Plugins
+
+Go to the Available plugins tab and search for these plugins one by one.
+
+Install only these:
+
+✅ Docker Pipeline
+✅ Docker
+✅ Pipeline
+✅ Git
+✅ GitHub
+✅ GitHub Integration
+✅ Kubernetes
+✅ Kubernetes CLI
+✅ Maven Integration
+✅ SSH Agent
+✅ Credentials Binding
+
+If a plugin is already installed, you don't need to install it again.
 
 
 
