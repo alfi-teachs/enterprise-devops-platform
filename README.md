@@ -1209,3 +1209,23 @@ Password: Docker Hub Access Token
 ID: dockerhub-creds
 Description: Docker Hub credentials
 ```
+Important:
+Use a Docker Hub Access Token, not your normal password.
+
+Create token in Docker Hub:
+
+```bash
+Docker Hub
+    ↓
+Account Settings
+    ↓
+Security
+    ↓
+New Access Token
+```
+Give it Read/Write permission.
+
+After adding credentials, we will create your first:
+```bash
+Jenkinsfile
+```
