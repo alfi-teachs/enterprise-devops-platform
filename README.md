@@ -843,8 +843,23 @@ REPOSITORY          TAG    IMAGE ID
 jenkins/jenkins     lts    xxxxxxxxx
 ```
 
+### Step 3 – Create a Docker Volume
 
+A Docker volume stores Jenkins data (jobs, plugins, credentials, pipeline history). This way, if the Jenkins container is removed, your data is preserved.
 
+Run:
+```bash
+docker volume create jenkins_home
+```
+Verify it was created:
+```bash
+docker volume ls
+```
+You should see:
+```bash
+DRIVER    VOLUME NAME
+local     jenkins_home
+```
 
 
 
