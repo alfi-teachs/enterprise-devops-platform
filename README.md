@@ -1035,3 +1035,66 @@ After that open:
 ```bash
 http://localhost:8081
 ```
+enter username  and password
+
+You have completed the most important setup part:
+
+✅ Jenkins running in Docker
+✅ Custom Jenkins image created
+✅ Git installed
+✅ Maven installed
+✅ Docker CLI installed
+✅ kubectl installed
+✅ Jenkins data persisted using volume
+✅ Docker socket connected
+
+### Step 13 – Verify Tools Inside Jenkins Container
+
+Open your terminal and run:
+
+1. Enter Jenkins container
+```bash
+docker exec -it jenkins bash
+```
+You should see something like:
+```bash
+jenkins@container-id:/$
+```
+2. Check Git
+
+Inside Jenkins:
+```bash
+git --version
+```
+Expected:
+```bash
+git version x.x.x
+```
+3. Check Maven
+```bash
+mvn --version
+```
+Expected:
+
+Apache Maven 3.x.x
+Java version ...
+4. Check Docker
+```bash
+docker --version
+```
+Expected:
+```bash
+Docker version xx.x.x
+```
+5. Check kubectl
+6. ```bash
+kubectl version --client
+```
+Expected:
+```bash
+Client Version: v1.xx.x
+```
+After checking, exit:
+
+exit
+
