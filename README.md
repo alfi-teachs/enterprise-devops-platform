@@ -1240,7 +1240,7 @@ Jenkinsfile
 ```
 Save the file.
 
-Step 4: Push to GitHub
+### Step 18: Push to GitHub
 
 Run:
 ```bash
