@@ -860,8 +860,32 @@ You should see:
 DRIVER    VOLUME NAME
 local     jenkins_home
 ```
+### Step 4 – Run the Jenkins Container
 
+We'll start with a basic Jenkins installation to make sure everything works. Later we'll enhance it so Jenkins can build Docker images and deploy to Kubernetes.
 
+Run this command in Git Bash:
+```bash
+docker run -d \
+  --name jenkins \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts
+```
+If you're using Command Prompt or PowerShell, let me know and I'll give you the Windows version.
+
+Verify the container is running
+Run:
+```bash
+docker ps
+```
+You should see something like:
+```bash
+CONTAINER ID   IMAGE                  STATUS
+xxxxxxxxxxxx   jenkins/jenkins:lts    Up xx seconds
+
+```
 
 
 
