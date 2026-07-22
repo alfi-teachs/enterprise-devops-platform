@@ -814,7 +814,18 @@ It won't go below 2 because:
 ```bash
 minReplicas: 2
 ```
---------------------------------------
+--------------------------------------------------
+# Phase 1 – Jenkins Installation
+### Step 1: Verify Docker
+
+Run these commands:
+```bash
+docker --version
+docker ps
+docker images
+```
+
+Send me the output.
 
 
 
