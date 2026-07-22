@@ -827,7 +827,21 @@ docker images
 
 Send me the output.
 
-
+### Step 2 – Pull the Jenkins image
+Run:
+```bash
+docker pull jenkins/jenkins:lts
+```
+Wait until it finishes.
+Then verify:
+```bash
+docker images
+```
+You should see something like:
+```bash
+REPOSITORY          TAG    IMAGE ID
+jenkins/jenkins     lts    xxxxxxxxx
+```
 
 
 
