@@ -1102,3 +1102,51 @@ After checking, exit:
 
 exit
 
+### Step 14 – Configure Jenkins Tools
+
+Now go to Jenkins UI:
+
+Manage Jenkins
+      ↓
+Tools
+
+Configure these:
+
+1. JDK Installation
+
+Find:
+
+JDK installations
+```bash 
+Click Add JDK
+
+Name: jdk21
+
+Uncheck:  Install automatically
+
+Set path:  /opt/java/openjdk
+```
+2. Maven Installation
+
+Find:  Maven installations
+
+Click Add Maven
+```bash 
+Name:  maven3
+
+Uncheck:  Install automatically
+
+Maven home:  /usr/share/maven
+```
+3. Git
+
+Find:  Git installations
+
+Click Add Git
+```bash
+Name: git
+
+Path: /usr/bin/git
+
+Click:  Apply → Save
+```
