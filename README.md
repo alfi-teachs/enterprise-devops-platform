@@ -868,10 +868,14 @@ Run this command in Git Bash:
 ```bash
 docker run -d \
   --name jenkins \
-  -p 8080:8080 \
+  -p 8081:8080 \
   -p 50000:50000 \
   -v jenkins_home:/var/jenkins_home \
   jenkins/jenkins:lts
+```
+Then open:
+```bash
+http://localhost:8081
 ```
 If you're using Command Prompt or PowerShell, let me know and I'll give you the Windows version.
 
@@ -884,10 +888,19 @@ You should see something like:
 ```bash
 CONTAINER ID   IMAGE                  STATUS
 xxxxxxxxxxxx   jenkins/jenkins:lts    Up xx seconds
-
 ```
 
-
+get inide container
+```bash
+docker exec -it jenkins bash
+```
+Then inside the container run:
+```bash
+cat /var/jenkins_home/secrets/initialAdminPassword
+```
+Type:
+exit
+to leave the container.
 
 
 
