@@ -1180,3 +1180,32 @@ Open:
 ```bash
 http://localhost:8085
 ```
+### Step 17 – Create Docker Hub Credentials in Jenkins
+
+Jenkins needs permission to push images.
+
+Open Jenkins:
+```bash
+Manage Jenkins
+        ↓
+Credentials
+        ↓
+System
+        ↓
+Global credentials (unrestricted)
+        ↓
+Add Credentials
+```
+Choose:
+
+Kind:
+```bash
+Username with password
+```
+Fill:
+```bash
+Username: your Docker Hub username
+Password: Docker Hub Access Token
+ID: dockerhub-creds
+Description: Docker Hub credentials
+```
