@@ -1150,3 +1150,28 @@ Path: /usr/bin/git
 
 Click:  Apply → Save
 ```
+### step 15
+
+```bash
+cd /c/project/enterprise-devops-platform
+```
+Run:
+```bash
+docker build -t alskill/enterprise-devops-app:v2 -f docker/Dockerfile .
+```
+After successful build:
+```bash
+docker images
+```
+You should see:
+```bash
+alskill/enterprise-devops-app   v2
+```
+Then test:
+```bash
+docker run -d -p 8085:80 alskill/enterprise-devops-app:v2
+```
+Open:
+```bash
+http://localhost:8085
+```
