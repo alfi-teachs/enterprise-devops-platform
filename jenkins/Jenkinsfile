@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "alskill/enterprise-devops-app"
-        IMAGE_TAG  = "v2"
+        IMAGE_TAG = "v2"
     }
 
     stages {
@@ -15,17 +15,15 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Build') {
             steps {
                 sh '''
-                docker build \
-                -t $IMAGE_NAME:$IMAGE_TAG \
-                -f docker/Dockerfile .
+                docker build -t $IMAGE_NAME:$IMAGE_TAG -f docker/Dockerfile .
                 '''
             }
         }
 
-        stage('Login Docker Hub') {
+        stage('Docker Push') {
             steps {
                 withCredentials([
                     usernamePassword(
@@ -35,19 +33,10 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                    echo $DOCKER_PASS | docker login \
-                    -u $DOCKER_USER \
-                    --password-stdin
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                    docker push $IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
-            }
-        }
-
-        stage('Push Image') {
-            steps {
-                sh '''
-                docker push $IMAGE_NAME:$IMAGE_TAG
-                '''
             }
         }
     }
