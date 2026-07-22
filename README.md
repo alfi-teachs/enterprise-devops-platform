@@ -1169,7 +1169,7 @@ alskill/enterprise-devops-app   v2
 ```
 Then test:
 ```bash
-docker run -d -p 8085:80 alskill/enterprise-devops-app:v2
+docker run -d --name test-app -p 8085:80 alskill/enterprise-devops-app:v2
 ```
 Open:
 ```bash
