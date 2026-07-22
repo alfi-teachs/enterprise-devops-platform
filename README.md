@@ -916,7 +916,12 @@ Type:
 exit
 to leave the container.
 
-
+### Step 6 – Check Jenkins Version
+On the Jenkins Dashboard:
+Go to: 
+```bash
+Manage Jenkins
+```
 
 
 
