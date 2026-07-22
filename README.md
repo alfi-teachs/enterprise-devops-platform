@@ -1238,3 +1238,14 @@ After adding credentials, we will create your first:
 ```bash
 Jenkinsfile
 ```
+Save the file.
+
+### Step 18: Push to GitHub
+
+Run:
+```bash
+git add Jenkinsfile
+git commit -m "Add Jenkins CI pipeline"
+git push
+```
+
