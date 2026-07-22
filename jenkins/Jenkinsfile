@@ -1,0 +1,54 @@
+pipeline {
+
+    agent any
+
+    environment {
+        IMAGE_NAME = "alskill/enterprise-devops-app"
+        IMAGE_TAG  = "v2"
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build \
+                -t $IMAGE_NAME:$IMAGE_TAG \
+                -f docker/Dockerfile .
+                '''
+            }
+        }
+
+        stage('Login Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+                    sh '''
+                    echo $DOCKER_PASS | docker login \
+                    -u $DOCKER_USER \
+                    --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                sh '''
+                docker push $IMAGE_NAME:$IMAGE_TAG
+                '''
+            }
+        }
+    }
+}
