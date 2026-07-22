@@ -1219,10 +1219,19 @@ Docker Hub
     ↓
 Account Settings
     ↓
-Security
-    ↓
-New Access Token
+personal Access Token
+      ↓
+generate token
 ```
+Give it a name, for example:
+```bash
+jenkins-cicd
+```
+Select permission:   Read & Write
+Generate token
+
+Copy the token immediately (Docker Hub shows it only once).
+
 Give it Read/Write permission.
 
 After adding credentials, we will create your first:
