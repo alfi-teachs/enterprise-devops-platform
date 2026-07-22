@@ -100,4 +100,3 @@ console.log("Application Version :", version);
 
 console.log("Enterprise DevOps Platform Loaded Successfully");
 console.log("Loaded at :", new Date().toLocaleString());
->>>>>>> 83491f854993524d9b6ec2613f6a0dddf064d5bd
