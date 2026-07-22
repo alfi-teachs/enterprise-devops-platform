@@ -949,7 +949,57 @@ Install only these:
 
 If a plugin is already installed, you don't need to install it again.
 
+### Step 8 – Configure Global Tools
 
+Jenkins needs to know where Git, Maven, and JDK are.
 
+Go to:
 
+Manage Jenkins
+      ↓
+Tools
+
+(or Global Tool Configuration, depending on your Jenkins version).
+
+Tell me if you see these sections:
+
+✅ Git installations
+✅ JDK installations
+✅ Maven installations
+```bash
+docker stop jenkins
+docker rm jenkins
+```
+### Step 9 – Create a Jenkins Workspace
+
+Create a new folder anywhere on your machine.
+
+For example:
+```bash
+cd jenkins 
+```
+### Step 10 – Create the Dockerfile
+inside folder create dockerfile
+
+Paste this content into the Dockerfileile
+Now build the image:
+```bash
+docker build -t jenkins-devops:lts .
+```
+This will take some time because it installs:
+
+Git
+Maven
+Docker CLI
+kubectl
+
+After it completes, verify:
+```bash
+docker images
+```
+You should see:
+```bash
+REPOSITORY          TAG
+jenkins-devops      lts
+```
 
