@@ -898,7 +898,21 @@ Then inside the container run:
 ```bash
 cat /var/jenkins_home/secrets/initialAdminPassword
 ```
+Then open:
+```bash
+http://localhost:8081
+```
+Copy the password, paste it into the Administrator password field, and click Continue.
+
+Then:
+- Click Install suggested plugins.
+- Wait for the plugins to finish installing.
+- Create your first admin user.
+- Finish the setup.
+- You should arrive at the Jenkins Dashboard.
+
 Type:
+
 exit
 to leave the container.
 
