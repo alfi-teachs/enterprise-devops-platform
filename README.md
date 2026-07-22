@@ -1165,11 +1165,16 @@ docker images
 ```
 You should see:
 ```bash
-alskill/enterprise-devops-app   v2
+alskill/enterprise
+-devops-app   v2
 ```
 Then test:
 ```bash
 docker run -d --name test-app -p 8085:80 alskill/enterprise-devops-app:v2
+```
+Verify:
+```bash
+docker ps
 ```
 Open:
 ```bash
