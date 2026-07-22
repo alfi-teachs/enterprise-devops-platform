@@ -1002,4 +1002,36 @@ You should see:
 REPOSITORY          TAG
 jenkins-devops      lts
 ```
+### Step 12 – Start Jenkins with Docker Access
 
+Before starting, make sure the old Jenkins container is removed:
+```bash
+docker ps -a
+```
+If you still see the old container:
+```bash
+docker rm -f jenkins
+```
+Now run the new Jenkins container:
+```bash
+docker run -d \
+  --name jenkins \
+  -p 8081:8080 \
+  -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  -v //var/run/docker.sock:/var/run/docker.sock \
+  jenkins-devops:lts
+```
+then check:
+```bash
+docker ps
+```
+You should see:
+```bash
+jenkins-devops:lts
+0.0.0.0:8081->8080/tcp
+```
+After that open:
+```bash
+http://localhost:8081
+```
