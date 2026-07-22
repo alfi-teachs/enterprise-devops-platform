@@ -1063,6 +1063,7 @@ jenkins@container-id:/$
 2. Check Git
 
 Inside Jenkins:
+
 ```bash
 git --version
 ```
@@ -1071,13 +1072,16 @@ Expected:
 git version x.x.x
 ```
 3. Check Maven
+
 ```bash
 mvn --version
 ```
 Expected:
-
+```bash
 Apache Maven 3.x.x
+
 Java version ...
+```
 4. Check Docker
 ```bash
 docker --version
@@ -1087,7 +1091,7 @@ Expected:
 Docker version xx.x.x
 ```
 5. Check kubectl
-6. ```bash
+```bash
 kubectl version --client
 ```
 Expected:
