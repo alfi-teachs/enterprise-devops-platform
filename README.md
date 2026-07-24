@@ -1353,15 +1353,15 @@ docker rm jenkins
 ### Step 2 – Start Jenkins with kubeconfig mounted
 Because you're using Git Bash on Windows, run:
 ```bash
-docker run -d \
-  --name jenkins \
-  -p 8081:8080 \
-  -p 50000:50000 \
-  -v jenkins_home:/var/jenkins_home \
-  -v //var/run/docker.sock:/var/run/docker.sock \
-  -v /c/Users/almal/.kube:/var/jenkins_home/.kube \
-  -v /c/Users/almal/.minikube:/var/jenkins_home/.minikube \
-  -e KUBECONFIG=/var/jenkins_home/.kube/config \
+docker run -d ^
+  --name jenkins ^
+  -p 8081:8080 ^
+  -p 50000:50000 ^
+  -v jenkins_home:/var/jenkins_home ^
+  -v //var/run/docker.sock:/var/run/docker.sock ^
+  -v "C:\Users\almal\.kube:/var/jenkins_home/.kube" ^
+  -v "C:\Users\almal\.minikube:/var/jenkins_home/.minikube" ^
+  -e KUBECONFIG=/var/jenkins_home/.kube/config ^
   jenkins-devops:lts
 ```
 This mounts:
