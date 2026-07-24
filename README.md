@@ -816,7 +816,92 @@ minReplicas: 2
 ```
 --------------------------------------------------
 # Phase 1 – Jenkins Installation
-### Step 1: Verify Docker
+### Step 1: Verify the current environment
+
+Check what is running.
+
+Docker containers
+```bash
+docker ps -a
+```
+Kubernetes pods
+```bash
+kubectl get pods -A
+```
+
+Reason:
+
+Check the current state.
+Identify temporary containers or pods that are no longer needed.
+### Step 2: Remove temporary Docker test container
+
+Our application is already running in Kubernetes.
+
+The Docker container test-app was created only to verify that the Docker image worked.
+
+It is not part of the final architecture.
+
+Stop it:
+```bash
+docker stop test-app
+```
+Remove it:
+```bash
+docker rm test-app
+```
+Verify:
+```bash
+docker ps -a
+```
+Reason:
+
+Avoid duplicate application instances.
+Keep Docker clean.
+Prevent confusion during CI/CD.
+### Step 3: Remove HPA load-generator pod
+
+Check:
+```bash
+kubectl get pods
+```
+If you still see:  load-generator
+
+Delete it:
+```bash
+kubectl delete pod load-generator
+```
+Verify:
+```bash
+kubectl get pods
+```
+Reason:
+
+- The load-generator was only used to test HPA.
+- It is not part of the production deployment.
+- We don't want unnecessary pods consuming resources.
+### Step 4: Verify Kubernetes application
+```bash
+kubectl get pods
+```
+Expected:
+```bash
+enterprise-devops-app
+```
+Running
+
+Check the service:
+```bash
+kubectl get svc
+```
+Check HPA:
+```bash
+kubectl get hpa
+```
+Reason:
+
+Confirm the application is healthy before introducing Jenkins.
+
+### Step 5: Verify Docker
 
 Run these commands:
 ```bash
@@ -824,10 +909,7 @@ docker --version
 docker ps
 docker images
 ```
-
-Send me the output.
-
-### Step 2 – Pull the Jenkins image
+### Step 6 – Pull the Jenkins image
 Run:
 ```bash
 docker pull jenkins/jenkins:lts
@@ -843,7 +925,7 @@ REPOSITORY          TAG    IMAGE ID
 jenkins/jenkins     lts    xxxxxxxxx
 ```
 
-### Step 3 – Create a Docker Volume
+### Step 7– Create a Docker Volume
 
 A Docker volume stores Jenkins data (jobs, plugins, credentials, pipeline history). This way, if the Jenkins container is removed, your data is preserved.
 
@@ -860,7 +942,7 @@ You should see:
 DRIVER    VOLUME NAME
 local     jenkins_home
 ```
-### Step 4 – Run the Jenkins Container
+### Step 8 – Run the Jenkins Container
 
 We'll start with a basic Jenkins installation to make sure everything works. Later we'll enhance it so Jenkins can build Docker images and deploy to Kubernetes.
 
@@ -911,9 +993,7 @@ Then:
 - Finish the setup.
 - You should arrive at the Jenkins Dashboard.
 
-Type:
-
-exit
+Type:  exit
 to leave the container.
 
 ### Step 6 – Check Jenkins Version
@@ -929,7 +1009,7 @@ Manage Jenkins → Plugins
 ```
 (If your Jenkins version shows Manage Plugins, that's fine too.)
 
-### Step 7 – Install Required Plugins
+### Step 7– Install Required Plugins
 
 Go to the Available plugins tab and search for these plugins one by one.
 
@@ -949,36 +1029,7 @@ Install only these:
 
 If a plugin is already installed, you don't need to install it again.
 
-### Step 8 – Configure Global Tools
-
-Jenkins needs to know where Git, Maven, and JDK are.
-
-Go to:
-
-Manage Jenkins
-      ↓
-Tools
-
-(or Global Tool Configuration, depending on your Jenkins version).
-
-Tell me if you see these sections:
-
-✅ Git installations
-✅ JDK installations
-✅ Maven installations
-```bash
-docker stop jenkins
-docker rm jenkins
-```
-### Step 9 – Create a Jenkins Workspace
-
-Create a new folder anywhere on your machine.
-
-For example:
-```bash
-cd jenkins 
-```
-### Step 10 – Create the Dockerfile
+### Step 8 – Create the Dockerfile
 inside folder create dockerfile
 
 Paste this content into the Dockerfileile
@@ -1002,7 +1053,7 @@ You should see:
 REPOSITORY          TAG
 jenkins-devops      lts
 ```
-### Step 12 – Start Jenkins with Docker Access
+### Step 9 – Start Jenkins with Docker Access
 
 Before starting, make sure the old Jenkins container is removed:
 ```bash
@@ -1048,7 +1099,7 @@ You have completed the most important setup part:
 ✅ Jenkins data persisted using volume
 ✅ Docker socket connected
 
-### Step 13 – Verify Tools Inside Jenkins Container
+### Step 10 – Verify Tools Inside Jenkins Container
 
 Open your terminal and run:
 
@@ -1102,7 +1153,7 @@ After checking, exit:
 
 exit
 
-### Step 14 – Configure Jenkins Tools
+### Step 11– Configure Jenkins Tools
 
 Now go to Jenkins UI:
 
@@ -1150,7 +1201,7 @@ Path: /usr/bin/git
 
 Click:  Apply → Save
 ```
-### step 15
+### step 12
 
 ```bash
 cd /c/project/enterprise-devops-platform
