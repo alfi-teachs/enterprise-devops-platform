@@ -1387,7 +1387,8 @@ kubectl get nodes
 If everything is mounted correctly, you should see your three Minikube nodes.
 
 ### step 4 
-now we add this in pipe line 
+now we add it in jenkinsfile
+
 ```bash
 stage('Deploy to Kubernetes') {
     steps {
@@ -1398,4 +1399,21 @@ stage('Deploy to Kubernetes') {
     }
 }
 ```
-
+# step 5 
+```bash
+cd ..
+```
+```bash
+pwd
+```
+/c/project/enterprise-devops-platform
+```bash
+git add jenkins/Jenkinsfile
+git commit -m "Add Kubernetes deployment stage"
+```
+```bash
+git pull
+```
+```bash
+git push
+```
