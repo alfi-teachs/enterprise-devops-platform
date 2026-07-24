@@ -43,11 +43,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
-                kubectl set image deployment/enterprise-devops-app \
-                enterprise-devops-app=$IMAGE_NAME:$IMAGE_TAG
+                kubectl apply -f kubernetes/
+                kubectl rollout status deployment/enterprise-devops-app
                 '''
             }
         }
     }
-}
 }
