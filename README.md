@@ -1369,7 +1369,7 @@ This mounts:
 - Your Minikube certificates
 - Docker socket
 - Jenkins home
-### Step 20 – Verify access
+### Step 3 – Verify access
 Enter the container:
 ```bash
 docker exec -it jenkins bash
@@ -1379,6 +1379,7 @@ Run:
 kubectl config current-context
 ```
 Expected:   minikube
+
 Then run:
 ```bash
 kubectl get nodes
