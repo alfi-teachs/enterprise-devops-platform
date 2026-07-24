@@ -1299,4 +1299,44 @@ git add Jenkinsfile
 git commit -m "Add Jenkins CI pipeline"
 git push
 ```
+### Phase 7 – Create the Jenkins Pipeline
+#### Step 15 – Create the Jenkinsfile
 
+Create:
+
+enterprise-devops-platform/
+└── jenkins/
+    └── Jenkinsfile
+
+Commit and push:
+
+git add .
+git commit -m "Add Jenkins pipeline"
+git push
+### Step 16 – Create the Pipeline job
+
+Create a new Pipeline job.
+
+Configure:
+
+Definition: Pipeline script from SCM
+SCM: Git
+Repository URL: https://github.com/alfi-teachs/enterprise-devops-platform.git
+Credentials: None (public repository)
+Branch: */main
+Script Path: jenkins/Jenkinsfile
+
+Important: Uncheck Lightweight checkout.
+
+Save.
+
+#### Step 17 – Run the Pipeline
+
+Click:   Build Now
+
+Expected stages:
+
+✅ Checkout Code
+✅ Docker Build
+✅ Docker Login
+✅ Docker Push
