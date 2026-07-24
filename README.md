@@ -1386,4 +1386,16 @@ kubectl get nodes
 ```
 If everything is mounted correctly, you should see your three Minikube nodes.
 
+### step 4 
+now we add this in pipe line 
+```bash
+stage('Deploy to Kubernetes') {
+    steps {
+        sh '''
+        kubectl set image deployment/enterprise-devops-app \
+        enterprise-devops-app=$IMAGE_NAME:$IMAGE_TAG
+        '''
+    }
+}
+```
 
