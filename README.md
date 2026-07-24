@@ -1417,3 +1417,14 @@ git pull
 ```bash
 git push
 ```
+###step 6
+
+ping command
+```bash
+apt-get update
+apt-get install -y iputils-ping
+```
+then test
+```bash
+ping host.docker.internal
+```
