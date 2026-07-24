@@ -1340,3 +1340,49 @@ Expected stages:
 ✅ Docker Build
 ✅ Docker Login
 ✅ Docker Push
+
+----------------------------------
+# for kubernetes we have delete jenkins and recreate jenkins wih kube config mounted
+
+### Step 1 – Stop the Jenkins container
+
+```bash
+docker stop jenkins
+docker rm jenkins
+```
+### Step 2 – Start Jenkins with kubeconfig mounted
+Because you're using Git Bash on Windows, run:
+```bash
+docker run -d \
+  --name jenkins \
+  -p 8081:8080 \
+  -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  -v //var/run/docker.sock:/var/run/docker.sock \
+  -v /c/Users/almal/.kube:/var/jenkins_home/.kube \
+  -v /c/Users/almal/.minikube:/var/jenkins_home/.minikube \
+  -e KUBECONFIG=/var/jenkins_home/.kube/config \
+  jenkins-devops:lts
+```
+This mounts:
+- Your kubeconfig
+- Your Minikube certificates
+- Docker socket
+- Jenkins home
+### Step 20 – Verify access
+Enter the container:
+```bash
+docker exec -it jenkins bash
+```
+Run:
+```bash
+kubectl config current-context
+```
+Expected:   minikube
+Then run:
+```bash
+kubectl get nodes
+```
+If everything is mounted correctly, you should see your three Minikube nodes.
+
+
