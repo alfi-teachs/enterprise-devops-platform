@@ -1,4 +1,3 @@
-
 # Enterprise DevOps Platform - Project Setup
 # Git Setup and Push to GitHub
 
