@@ -557,23 +557,400 @@ git commit -m "Add Docker configuration"
 
 git push
 ----------------------------------------
-# Phase 4 - Kubernetes (Minikube)
-## Deploy on your Minikube cluster first.
-Step 1 - Verify Minikube
-minikube status
-Step 2 - Verify Nodes
-kubectl get nodes
-Step 3 - Edit namespace.yaml
-nano kubernetes/namespace.yaml
-Step 4 - Apply the Namespace
-kubectl apply -f kubernetes/namespace.yaml
-Step 5 - Edit configmap.yaml
-nano kubernetes/configmap.yaml
-Step 6 - Apply the ConfigMap
-kubectl apply -f kubernetes/configmap.yaml
+# Phase 5 – Kubernetes (Minikube)
 
---------------------------------------------
-# Phase 5 - Kubernetes (Minikube Deployment)
+## Step 1 – Verify Minikube Cluster
+
+Check that Minikube is running.
+
+```bash
+minikube status
+```
+
+Verify the Kubernetes nodes.
+
+```bash
+kubectl get nodes
+```
+
+---
+
+## Step 2 – Create the Namespace
+
+Edit the namespace manifest.
+
+```bash
+nano kubernetes/namespace.yaml
+```
+
+Apply the namespace.
+
+```bash
+kubectl apply -f kubernetes/namespace.yaml
+```
+
+Verify.
+
+```bash
+kubectl get namespaces
+```
+
+---
+
+## Step 3 – Create the ConfigMap
+
+Edit the ConfigMap.
+
+```bash
+nano kubernetes/configmap.yaml
+```
+
+Apply it.
+
+```bash
+kubectl apply -f kubernetes/configmap.yaml
+```
+
+Verify.
+
+```bash
+kubectl get configmap -n enterprise-devops
+
+kubectl describe configmap enterprise-config -n enterprise-devops
+```
+
+---
+
+## Step 4 – Create the Secret
+
+Edit the Secret.
+
+```bash
+nano kubernetes/secret.yaml
+```
+
+Apply it.
+
+```bash
+kubectl apply -f kubernetes/secret.yaml
+```
+
+Verify.
+
+```bash
+kubectl get secret -n enterprise-devops
+
+kubectl describe secret enterprise-secret -n enterprise-devops
+```
+
+---
+
+## Step 5 – Deploy the Application
+
+Edit the Deployment.
+
+```bash
+nano kubernetes/deployment.yaml
+```
+
+The Deployment should include:
+
+* Namespace
+* Docker image
+* ConfigMap
+* Secret
+* Replicas
+* CPU requests
+* CPU limits
+
+Apply the Deployment.
+
+```bash
+kubectl apply -f kubernetes/deployment.yaml
+```
+
+Verify.
+
+```bash
+kubectl get deployment -n enterprise-devops
+
+kubectl get pods -n enterprise-devops
+
+kubectl describe deployment enterprise-devops-app -n enterprise-devops
+```
+
+---
+
+## Step 6 – Create the Service
+
+Edit the Service.
+
+```bash
+nano kubernetes/service.yaml
+```
+
+Apply it.
+
+```bash
+kubectl apply -f kubernetes/service.yaml
+```
+
+Verify.
+
+```bash
+kubectl get svc -n enterprise-devops
+
+kubectl get endpoints -n enterprise-devops
+```
+
+---
+
+## Step 7 – Verify the Application in the Browser
+
+Open the application using the Kubernetes Service.
+
+```bash
+minikube service enterprise-devops-app -n enterprise-devops
+```
+
+Or display only the URL.
+
+```bash
+minikube service enterprise-devops-app -n enterprise-devops --url
+```
+
+Expected:
+
+* Application opens successfully.
+* HTML, CSS and JavaScript are loaded.
+* Kubernetes Service is working correctly.
+
+---
+
+## Step 8 – Configure Ingress
+
+Enable the NGINX Ingress Controller.
+
+```bash
+minikube addons enable ingress
+```
+
+Verify.
+
+```bash
+kubectl get pods -n ingress-nginx
+```
+
+Expected:
+
+```text
+ingress-nginx-controller Running
+```
+
+Edit the Ingress manifest.
+
+```bash
+nano kubernetes/ingress.yaml
+```
+
+Apply it.
+
+```bash
+kubectl apply -f kubernetes/ingress.yaml
+```
+
+Verify.
+
+```bash
+kubectl get ingress -n enterprise-devops
+
+kubectl describe ingress enterprise-ingress -n enterprise-devops
+```
+
+Get the Minikube IP.
+
+```bash
+minikube ip
+```
+
+Update your hosts file to map the hostname (for example, `enterprise.local`) to the Minikube IP.
+
+Verify the application in the browser.
+
+```
+http://enterprise.local
+```
+
+---
+
+## Step 9 – Enable Metrics Server
+
+Check the Minikube addons.
+
+```bash
+minikube addons list
+```
+
+Enable Metrics Server if it is not enabled.
+
+```bash
+minikube addons enable metrics-server
+```
+
+Verify.
+
+```bash
+kubectl top nodes
+
+kubectl top pods -n enterprise-devops
+```
+
+---
+
+## Step 10 – Create the Horizontal Pod Autoscaler (HPA)
+
+Edit the HPA manifest.
+
+```bash
+nano kubernetes/hpa.yaml
+```
+
+Apply it.
+
+```bash
+kubectl apply -f kubernetes/hpa.yaml
+```
+
+Verify.
+
+```bash
+kubectl get hpa -n enterprise-devops
+```
+
+---
+
+## Step 11 – Watch the Autoscaler
+
+Open three terminals.
+
+Terminal 1
+
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+
+Terminal 2
+
+```bash
+kubectl get deployment -n enterprise-devops -w
+```
+
+Terminal 3
+
+```bash
+kubectl get pods -n enterprise-devops -w
+```
+
+---
+
+## Step 12 – Generate Load
+
+Run a BusyBox container.
+
+```bash
+MSYS_NO_PATHCONV=1 kubectl run load-generator \
+--image=busybox \
+--restart=Never \
+-it \
+--rm \
+-- sh
+```
+
+Inside BusyBox, generate continuous traffic.
+
+```bash
+while true; do
+  wget -q -O- http://enterprise-devops-app.enterprise-devops.svc.cluster.local
+done
+```
+
+---
+
+## Step 13 – Observe Autoscaling
+
+Watch the HPA increase the number of replicas.
+
+Expected:
+
+```text
+Replicas
+
+2
+3
+4
+5
+```
+
+Verify.
+
+```bash
+kubectl get hpa -n enterprise-devops
+
+kubectl get deployment -n enterprise-devops
+
+kubectl get pods -n enterprise-devops
+```
+
+---
+
+## Step 14 – Stop the Load Test
+
+Inside BusyBox, press:
+
+```text
+Ctrl + C
+```
+
+---
+
+## Step 15 – Observe Scale Down
+
+Continue watching the HPA.
+
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+
+Expected:
+
+```text
+5
+↓
+
+4
+↓
+
+3
+↓
+
+2
+```
+
+The deployment will not scale below:
+
+```text
+minReplicas: 2
+```
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+# Phase 4 - Kubernetes (Minikube Deployment)
 ### Step 1 - Verify Minikube
 minikube status
 ```bash
@@ -804,179 +1181,8 @@ minReplicas: 2
 
 
 
---------------------------------------
-# phase 7
-## Ingress Setup (Production Style)
-### Step 1: Install Nginx Ingress Controller
-Enable:
-```bash
-minikube addons enable ingress
-```
-Check:
-```bash
-kubectl get pods -n ingress-nginx
-```
-Expected:
-```bash
-ingress-nginx-controller   Running
-```
-### Step 2: Create Ingress YAML
 
-ingress.yaml
-Apply:
-```bash
-kubectl apply -f ingress.yaml
-```
-### Step 3: Check Ingress
-```bash
-kubectl get ingress -n enterprise-devops
-```
-Example:
-```bash
-NAME                 HOSTS
-enterprise-ingress   enterprise.local
-```
-Detailed:
-```bash
-kubectl describe ingress enterprise-ingress -n enterprise-devops
-```
-### Step 4: Configure Local DNS
 
-Get Minikube IP:
-```bash
-192.168.49.2
-```
-### Step 5: Open Browser
-
-Now access:
-```bash
-minikube ip
-```
-#### step 6: Enable Metrics Server
-Check:
-```bash
-minikube addons list
-```
-Enable if needed:
-```bash
-minikube addons enable metrics-server
-```
-Verify
-```bash
-kubectl top nodes
-```
-```bash
-kubectl top pods -n enterprise-devops
-```
-If these commands return CPU and memory values, Metrics Server is working.
-
-### step 7:  – Add CPU Requests and Limits
-HPA needs this in the Deployment
-Apply:
-```bash
-kubectl apply -f deployment.yaml
-```
---------------------------------------------------------------
-### Phase 9 – Create HPA
-hpa.yaml
-Apply:
-```bash
-kubectl apply -f hpa.yaml
-```
-Verify:
-```bash
-kubectl get hpa -n enterprise-devops
-```
-Initially:
-```bash
-cpu: 28%/70%
-Replicas: 2
-```
-### Phase 10 – Watch HPA
-
-Terminal 1
-```bash
-kubectl get hpa -n enterprise-devops -w
-```
-Terminal 2
-```bash
-kubectl get deployment -n enterprise-devops -w
-```
-Terminal 3
-```bash
-kubectl get pods -n enterprise-devops -w
-```
-### Phase 11 – Generate Load
-
-Since you're using Git Bash, disable path conversion:
-```bash
-MSYS_NO_PATHCONV=1 kubectl run load-generator --image=busybox --restart=Never -it --rm -- sh
-```
-Inside BusyBox:
-```bash
-while true; do
-  wget -q -O- http://enterprise-devops-app.enterprise-devops.svc.cluster.local
-done
-```
-### Phase 12 – Observe Scaling
-
-Example:
-```bash
-Replicas
-
-2
-
-3
-
-4
-
-5
-
-```
-Pods:
-```bash
-enterprise-devops-app-xxxxx Running
-enterprise-devops-app-yyyyy Running
-enterprise-devops-app-zzzzz Running
-enterprise-devops-app-aaaaa Running
-enterprise-devops-app-bbbbb Running
-```
-Deployment:
-```bash
-READY
-
-5/5
-```
-### Phase 13 – Stop Load
-Press:
-```bash
-Ctrl + C
-```
-inside BusyBox.
-
-### Phase 14 – Watch Scale Down
-
-After the stabilization period:
-```bash
-
-5
-
-↓
-
-4
-
-↓
-
-3
-
-↓
-
-2
-```
-It won't go below 2 because:
-```bash
-minReplicas: 2
-```
 --------------------------------------------------
 # Phase 1 – Jenkins Installation
 ### Step 1: Verify the current environment
