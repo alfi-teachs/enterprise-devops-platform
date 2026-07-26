@@ -1,0 +1,11 @@
+.git
+.gitignore
+README.md
+docs/
+images/
+jenkins/
+monitoring/
+scripts/
+terraform/
+ansible/
+kubernetes/
