@@ -1096,7 +1096,6 @@ You should see:   prometheus
 with status:     UP
 ```
 ### Step 9: Deploy kube-state-metrics
-
 Create folder:
 
 From:
@@ -1132,6 +1131,43 @@ You should see:
 ```bash
 prometheus-xxxxx              Running
 kube-state-metrics-xxxxx      Running
+```
+### Step 10: Restart Prometheus Pod
+
+Why?
+Because your Prometheus container loaded the old configuration when it started.
+
+Restart:
+```bash
+kubectl rollout restart deployment prometheus -n monitoring
+```
+Check:
+```bash
+kubectl get pods -n monitoring
+```
+You should see a new Prometheus pod:
+```bash
+prometheus-newxxxxx     Running
+kube-state-metrics      Running
+```
+### Step 11: Verify Prometheus Target
+
+Start port-forward again:
+```bash
+kubectl port-forward svc/prometheus 9090:9090 -n monitoring
+```
+Open:
+```bash
+http://localhost:9090
+```
+Go:
+```bash
+Status → Targets
+```
+You should see:
+```bash
+prometheus              UP
+kube-state-metrics      UP
 ```
 After this we will update Prometheus configmap.yaml to scrape:
 ```bash
