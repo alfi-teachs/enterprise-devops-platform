@@ -578,97 +578,70 @@ git push
 ## Step 1 – Verify Minikube Cluster
 
 Check that Minikube is running.
-
 ```bash
 minikube status
 ```
-
 Verify the Kubernetes nodes.
 
 ```bash
 kubectl get nodes
 ```
-
 ---
-
 ## Step 2 – Create the Namespace
-
 Edit the namespace manifest.
-
 ```bash
 nano kubernetes/namespace.yaml
 ```
-
 Apply the namespace.
 
 ```bash
 kubectl apply -f kubernetes/namespace.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get namespaces
 ```
-
 ---
-
 ## Step 3 – Create the ConfigMap
-
 Edit the ConfigMap.
-
 ```bash
 nano kubernetes/configmap.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/configmap.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get configmap -n enterprise-devops
-
+```
+```bash
 kubectl describe configmap enterprise-config -n enterprise-devops
 ```
-
 ---
-
 ## Step 4 – Create the Secret
 
 Edit the Secret.
-
 ```bash
 nano kubernetes/secret.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/secret.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get secret -n enterprise-devops
-
+```
+```bash
 kubectl describe secret enterprise-secret -n enterprise-devops
 ```
-
 ---
-
 ## Step 5 – Deploy the Application
-
 Edit the Deployment.
-
 ```bash
 nano kubernetes/deployment.yaml
 ```
-
 The Deployment should include:
 
 * Namespace
@@ -680,13 +653,10 @@ The Deployment should include:
 * CPU limits
 
 Apply the Deployment.
-
 ```bash
 kubectl apply -f kubernetes/deployment.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get deployment -n enterprise-devops
 ```
@@ -761,14 +731,57 @@ Get the Minikube IP.
 ```bash
 minikube ip
 ```
-Update your hosts file to map the hostname (for example, `enterprise.local`) to the Minikube IP.
-
-Verify the application in the browser.
+### step 9
+Open Terminal 1:
+```bash
+minikube tunnel
 ```
+Leave it running.
+
+You already got:
+```bash
+✅ Tunnel successfully started
+```
+### Step 10 : Change hosts file
+
+Open Notepad as Administrator:
+
+C:\Windows\System32\drivers\etc\hosts
+
+Change this:
+
+192.168.49.2 enterprise.local
+
+to:
+```bash
+127.0.0.1 enterprise.local
+```
+Save.
+
+### Step 11: Flush DNS
+
+Open Command Prompt as Administrator:
+```bash
+ipconfig /flushdns
+```
+### Step 12 : Test from Git Bash
+
+Run:
+```bash
+curl -H "Host: enterprise.local" http://127.0.0.1
+```
+If you get your application response, open:
+```bash
 http://enterprise.local
 ```
+in the browser.
+
+
+
+
+------------------------------------------------------
 ---
-## Step 9 – Enable Metrics Server
+## Step 13– Enable Metrics Server
 Check the Minikube addons.
 
 ```bash
@@ -788,7 +801,7 @@ kubectl top pods -n enterprise-devops
 
 ---
 
-## Step 10 – Create the Horizontal Pod Autoscaler (HPA)
+## Step 14 – Create the Horizontal Pod Autoscaler (HPA)
 
 Edit the HPA manifest.
 
@@ -810,7 +823,7 @@ kubectl get hpa -n enterprise-devops
 
 ---
 
-## Step 11 – Watch the Autoscaler
+## Step 15– Watch the Autoscaler
 
 Open three terminals.
 
@@ -834,7 +847,7 @@ kubectl get pods -n enterprise-devops -w
 
 ---
 
-## Step 12 – Generate Load
+## Step 16 – Generate Load
 
 Run a BusyBox container.
 
@@ -857,7 +870,7 @@ done
 
 ---
 
-## Step 13 – Observe Autoscaling
+## Step 17 – Observe Autoscaling
 
 Watch the HPA increase the number of replicas.
 
@@ -884,7 +897,7 @@ kubectl get pods -n enterprise-devops
 
 ---
 
-## Step 14 – Stop the Load Test
+## Step 18– Stop the Load Test
 
 Inside BusyBox, press:
 
@@ -894,7 +907,7 @@ Ctrl + C
 
 ---
 
-## Step 15 – Observe Scale Down
+## Step 19 – Observe Scale Down
 
 Continue watching the HPA.
 
