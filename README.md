@@ -573,7 +573,7 @@ git pull
 git push
 ```
 ----------------------------------------
-# Phase 5 – Kubernetes (Minikube)
+# Phase 4 – Kubernetes (Minikube)
 
 ## Step 1 – Verify Minikube Cluster
 
@@ -957,13 +957,46 @@ Deployment
    |
 Pods
 ```
-
-
-
-
-
 ------------------------------------------------------------
+# phase 5 prometheus and grafana monitoring
+Inside your monitoring folder, keep files like:
+```bash
+monitoring/
+│
+├── namespace.yaml
+├── prometheus/
+│   ├── configmap.yaml
+│   ├── deployment.yaml
+│   ├── service.yaml
+│
+└── grafana/
+    ├── deployment.yaml
+    ├── service.yaml
+```
+### Step 1: Create namespace YAML
 
+Go into your project:
+```bash
+cd monitoring
+```
+Create:
+```bash
+touch namespace.yaml
+```
+Add content
+
+Apply:
+```bash
+kubectl apply -f namespace.yaml
+```
+Verify:
+```bash
+kubectl get ns
+```
+You should see:
+```bash
+monitoring   Active
+```
 
 ----------------------------------
 
