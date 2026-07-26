@@ -3,24 +3,19 @@
 ## Objective
 
 Create the project structure, initialize Git, create a GitHub repository, and push the project to GitHub.
-
 ---
-
 # Step 1 - Create the Project Directory
 
 ```bash
 mkdir enterprise-devops-platform
 cd enterprise-devops-platform
 ```
-
 Verify
 
 ```bash
 pwd
 ```
-
 ---
-
 # Step 2 - Create the Project Structure
 
 ```bash
@@ -35,13 +30,11 @@ mkdir monitoring
 mkdir scripts
 mkdir terraform
 ```
-
 Verify
 
 ```bash
 cmd //c tree
 ```
-
 Expected Output
 
 ```text
@@ -59,19 +52,16 @@ enterprise-devops-platform
 ```
 
 ---
-
 # Step 3 - Initialize Git Repository
 
 ```bash
 git init
 ```
-
 Verify
 
 ```bash
 git status
 ```
-
 Expected Output
 
 ```text
@@ -80,9 +70,6 @@ On branch master
 No commits yet
 nothing to commit
 ```
-
----
-
 # Step 4 - Create Placeholder Files
 
 Git does not track empty directories, so create placeholder files.
@@ -100,15 +87,11 @@ touch scripts/.gitkeep
 touch terraform/.gitkeep
 touch .gitignore
 ```
-
 Verify
-
 ```bash
 git status
 ```
-
 ---
-
 # Step 5 - Stage the Files
 
 ```bash
@@ -120,23 +103,17 @@ Verify
 ```bash
 git status
 ```
-
 ---
-
 # Step 6 - Create the First Commit
 
 ```bash
 git commit -m "Initial project structure"
 ```
-
 Verify
-
 ```bash
 git log --oneline
 ```
-
 ---
-
 # Step 7 - Create a GitHub Repository
 
 Create a new repository named:
@@ -175,15 +152,12 @@ origin  git@github.com:YOUR_GITHUB_USERNAME/enterprise-devops-platform.git (push
 ```
 
 ---
-
 # Step 9 - Rename the Branch
 
 ```bash
 git branch -M main
 ```
-
 Verify
-
 ```bash
 git branch
 ```
@@ -195,19 +169,15 @@ Expected Output
 ```
 
 ---
-
 # Step 10 - Push the Repository
 
 ```bash
 git push -u origin main
 ```
-
 Verify
-
 Open your GitHub repository and confirm the project structure has been uploaded.
 
 ---
-
 # Step 11 - Create Project Files
 
 Remove the placeholder files.
@@ -466,119 +436,365 @@ git commit -m "Add initial project files"
 git push
 ```
 -----------------------------------------------------------------------------
-
-
-# Phase 4 
-
-## Step 1: Go to docker folder
-
-From project root:
-```bash
-cd docker
-```
-### Step 2: Create Dockerfile
-
-Open:
-```bash
-touch Dockerfile
-```
-### Step 3: Dockerfile content
-go to root
-```bash
+# Phase 3 - Docker
+### Step 1 - Navigate to the Project
+cd enterprise-devops-platform
 pwd
-```
-### Expected:
-/c/project/enterprise-devops-platform
+### Step 2 - Verify the Application Files
+ls app
 
-### Step 4: Build Docker image
-```bash
+Expected Output
+
+app.js
+index.html
+style.css
+nginx.conf
+package.json
+### Step 3 - Create the Dockerfile
+nano docker/Dockerfile
+
+Paste:
+
+FROM nginx:alpine
+
+COPY app/index.html /usr/share/nginx/html/
+COPY app/style.css /usr/share/nginx/html/
+COPY app/app.js /usr/share/nginx/html/
+
+COPY app/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]
+
+Save and exit.
+
+### Step 4 - Create the .dockerignore File
+nano docker/.dockerignore
+
+Paste:
+
+.git
+.gitignore
+README.md
+docs
+terraform
+ansible
+jenkins
+kubernetes
+monitoring
+scripts
+images
+
+Save and exit.
+
+#### Step 5 - Build the Docker Image
 docker build -t enterprise-devops-app:v1 -f docker/Dockerfile .
-```
-Check image:
-```
+### Step 6 - Verify the Image
 docker images
-```
-### You should see:
 
-enterprise-devops-app   v1
-nginx                   latest
+Expected Output
 
-### Step 5: Run container
-```bash
-docker run -d -p 8080:80 --name devops-app enterprise-devops-app:v1
-```
-Check:
-```bash
+REPOSITORY               TAG
+enterprise-devops-app    v1
+### Step 7 - Run the Container
+docker run -d \
+--name enterprise-devops-container \
+-p 8080:80 \
+enterprise-devops-app:v1
+
+Windows Git Bash
+
+docker run -d ^
+--name enterprise-devops-container ^
+-p 8080:80 ^
+enterprise-devops-app:v1
+### Step 8 - Verify the Container
 docker ps
-```
-### Step 6 : Open browser
+### Step 9 - Test the Application
 
-Go to:
-```bash
+Open
+
 http://localhost:8080
-```
---------------------------------------
-# Phase 5 - Docker Hub
+-------------------------------------
+### Step 10 - Check Container Logs
+docker logs enterprise-devops-container
+### Step 11 - Stop the Container
+docker stop enterprise-devops-container
+### Step 12 - Start the Container
+docker start enterprise-devops-container
+### Step 13 - Remove the Container
+docker stop enterprise-devops-container
 
-We will:
-
-Create Docker Hub repository.
-Login from terminal.
-Tag image.
-
-```bash
+docker rm enterprise-devops-container
+Docker Hub
+### Step 14 - Login to Docker Hub
 docker login
-```
-Tag:
-```bash
+### Step 15 - Tag the Image
+
+Replace YOUR_DOCKERHUB_USERNAME with your Docker Hub username.
+
 docker tag enterprise-devops-app:v1 YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
-```
-Push:
-```bash
+
+Example:
+
+docker tag enterprise-devops-app:v1 alskill/enterprise-devops-app:v1
+### Step 16 - Push the Image
 docker push YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
-```
-----------------------------------
-# Phase 6 - Kubernetes
 
-We will use your existing:
-```bash
-kubernetes/
-├── deployment.yaml
-├── service.yaml
-├── configmap.yaml
-├── secret.yaml
-├── ingress.yaml
-└── hpa.yaml
-```
-### Deploy on your Minikube cluster first.
+Example:
 
-### Kubernetes HPA (Horizontal Pod Autoscaler) Lab
-### Phase 1 – Prerequisites
-Start Minikube:
-```bash
-minikube start
-```
+docker push alskill/enterprise-devops-app:v1
+### Step 17 - Verify the Image
+
+Visit your Docker Hub repository and confirm that the image is available.
+
+### Step 18 - Save Your Changes
+git add .
+
+git commit -m "Add Docker configuration"
+
+git push
+----------------------------------------
+# Phase 4 - Kubernetes (Minikube)
+## Deploy on your Minikube cluster first.
+Step 1 - Verify Minikube
+minikube status
+Step 2 - Verify Nodes
+kubectl get nodes
+Step 3 - Edit namespace.yaml
+nano kubernetes/namespace.yaml
+Step 4 - Apply the Namespace
+kubectl apply -f kubernetes/namespace.yaml
+Step 5 - Edit configmap.yaml
+nano kubernetes/configmap.yaml
+Step 6 - Apply the ConfigMap
+kubectl apply -f kubernetes/configmap.yaml
+
+--------------------------------------------
+# Phase 5 - Kubernetes (Minikube Deployment)
+### Step 1 - Verify Minikube
+minikube status
 ```bash
 kubectl get nodes
 ```
+### Step 2 - Create the
+Namespace
+Edit the namespace manifest.
+```bash
+nano kubernetes/namespace.yaml
+```
+```bash
+kubectl apply -f kubernetes/namespace.yaml
+```
+Verify.
+```bash
+kubectl get namespaces
+```
+### Step 3 - Create the ConfigMap
+
+Edit the ConfigMap.
+```bash
+nano kubernetes/configmap.yaml
+```
+```bash
+kubectl apply -f kubernetes/configmap.yaml
+```
+Verify.
+
+kubectl get configmap -n enterprise-devops
+
+kubectl describe configmap enterprise-config -n enterprise-devops
+Step 4 - Create the Secret
+
+Edit the Secret.
+
+nano kubernetes/secret.yaml
+
+Apply it.
+
+kubectl apply -f kubernetes/secret.yaml
+
+Verify.
+
+kubectl get secret -n enterprise-devops
+
+kubectl describe secret enterprise-secret -n enterprise-devops
+Step 5 - Deploy the Application
+
+Edit the Deployment.
+
+nano kubernetes/deployment.yaml
+
+Your Deployment should include:
+
+Namespace
+Docker image
+ConfigMap
+Secret
+CPU requests and limits
+Replica count
+
+Apply it.
+
+kubectl apply -f kubernetes/deployment.yaml
+
+Verify.
+
+kubectl get deployment -n enterprise-devops
+
+kubectl get pods -n enterprise-devops
+
+kubectl describe deployment enterprise-devops-app -n enterprise-devops
+Step 6 - Expose the Application
+
+Edit the Service.
+
+nano kubernetes/service.yaml
+
+Apply it.
+
+kubectl apply -f kubernetes/service.yaml
+
+Verify.
+
+kubectl get svc -n enterprise-devops
+
+kubectl get endpoints -n enterprise-devops
+
+Open the application.
+
+minikube service enterprise-devops-app -n enterprise-devops
+### Step 7 - Configure Ingress
+
+Enable the NGINX Ingress Controller.
+```bash
+minikube addons enable ingress
+```
+```bash
+kubectl get pods -n ingress-nginx
+```
 Expected:
 ```bash
-NAME           STATUS   ROLES
-minikube       Ready    control-plane
-minikube-m02   Ready
-minikube-m03   Ready
+ingress-nginx-controller   Running
 ```
-### Phase 2 – Create Namespace
+Edit the Ingress manifest.
+```bash
+nano kubernetes/ingress.yaml
+```
+Apply it.
+```bash
+kubectl apply -f kubernetes/ingress.yaml
+```
+```bash
+kubectl get ingress -n enterprise-devops
+```
+```bash
+kubectl describe ingress enterprise-ingress -n enterprise-devops
+```
+Get the Minikube IP.
+```bash
+minikube ip
+```
+Open the application using your configured hostname (for example, enterprise.local) after mapping it in your hosts file.
 
-namespace.yaml
-Apply:
+### Step 8 - Enable Metrics Server
+
+Check the addon status.
 ```bash
-kubectl apply -f namespace.yaml
+minikube addons list
 ```
-Verify:
+Enable Metrics Server if it is disabled.
 ```bash
-kubectl get ns
+minikube addons enable metrics-server
 ```
+Verify.
+```bash
+kubectl top nodes
+```
+```bash
+kubectl top pods -n enterprise-devops
+```
+If CPU and memory values are displayed, Metrics Server is working.
+
+### Step 9 - Create the Horizontal Pod Autoscaler (HPA)
+
+Edit the HPA manifest.
+```bash
+nano kubernetes/hpa.yaml
+```
+Apply it.
+```bash
+kubectl apply -f kubernetes/hpa.yaml
+```
+```bash
+kubectl get hpa -n enterprise-devops
+```
+### Step 10 - Watch Autoscaling
+
+Open three terminals.
+
+## Terminal 1
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+## Terminal 2
+```bash
+kubectl get deployment -n enterprise-devops -w
+```
+## Terminal 3
+```bash
+kubectl get pods -n enterprise-devops -w
+```
+### Step 11 - Generate Load
+
+Run a BusyBox pod.
+```bash
+MSYS_NO_PATHCONV=1 kubectl run load-generator \
+--image=busybox \
+--restart=Never \
+-it \
+--rm \
+-- sh
+```
+Inside the BusyBox shell:
+```bash
+while true; do
+  wget -q -O- http://enterprise-devops-app.enterprise-devops.svc.cluster.local
+```
+### Step 12 - Observe Scaling
+Watch the HPA increase the number of replicas.
+```bash
+2 → 3 → 4 → 5
+```
+kubectl get hpa -n enterprise-devops
+```bash
+kubectl get deployment -n enterprise-devops
+```
+kubectl get pods -n enterprise-devops
+# Step 13 - Stop the Load Test
+```bash
+ Ctrl + C
+```
+to stop the BusyBox loop.
+
+### Step 14 - Observe Scale Down
+Continue watching the HPA.
+```bash
+kubectl get hpa -n enterprise-devops -w
+```
+The replicas should gradually decrease.
+```bash
+5 → 4 → 3 → 2
+```
+The deployment will not scale below:
+```bash
+minReplicas: 2
+```
+
+----------------------------------
+
+
 ### Phase 3 – Create ConfigMap
 
 configmap.yaml
