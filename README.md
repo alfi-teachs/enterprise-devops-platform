@@ -1047,6 +1047,103 @@ Run:
 ```bash
 kubectl apply -f .
 ```
+Step 6: Verify
+
+Check pod:
+
+kubectl get pods -n monitoring
+
+Expected:
+
+prometheus-xxxxx   Running
+
+Check service:
+
+kubectl get svc -n monitoring
+
+Expected:
+
+prometheus   ClusterIP   9090/TCP
+
+Step 7: Access Prometheus UI
+
+Your service is ClusterIP, so it is only accessible inside Kubernetes.
+
+Use port-forward:
+
+kubectl port-forward svc/prometheus 9090:9090 -n monitoring
+
+Keep this terminal open.
+
+You should see:
+
+Forwarding from 127.0.0.1:9090 -> 9090
+
+Open browser:
+
+http://localhost:9090
+
+You should see the Prometheus dashboard.
+
+Step 8: Check Prometheus Targets
+
+In Prometheus UI:
+
+Go to:
+
+Status → Targets
+
+You should see:
+
+prometheus
+
+with status:
+
+UP
+
+Step 9: Deploy kube-state-metrics
+
+Create folder:
+
+From:
+
+/c/project/enterprise-devops-platform/monitoring
+
+Run:
+
+mkdir kube-state-metrics
+cd kube-state-metrics
+
+Create:
+
+touch deployment.yaml
+
+Add:
+
+Create service:
+
+touch service.yaml
+
+Add:
+
+Verify:
+
+kubectl get pods -n monitoring
+
+You should see:
+
+prometheus-xxxxx              Running
+kube-state-metrics-xxxxx      Running
+
+After this we will update Prometheus configmap.yaml to scrape:
+
+kube-state-metrics:8080
+
+Then you will see Kubernetes metrics like:
+
+kube_deployment_status_replicas
+kube_pod_status_phase
+kube_namespace_status_phase
 ----------------------------------
 
 
