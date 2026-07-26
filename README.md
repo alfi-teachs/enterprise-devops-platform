@@ -573,102 +573,75 @@ git pull
 git push
 ```
 ----------------------------------------
-# Phase 5 – Kubernetes (Minikube)
+# Phase 4 – Kubernetes (Minikube)
 
 ## Step 1 – Verify Minikube Cluster
 
 Check that Minikube is running.
-
 ```bash
 minikube status
 ```
-
 Verify the Kubernetes nodes.
 
 ```bash
 kubectl get nodes
 ```
-
 ---
-
 ## Step 2 – Create the Namespace
-
 Edit the namespace manifest.
-
 ```bash
 nano kubernetes/namespace.yaml
 ```
-
 Apply the namespace.
 
 ```bash
 kubectl apply -f kubernetes/namespace.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get namespaces
 ```
-
 ---
-
 ## Step 3 – Create the ConfigMap
-
 Edit the ConfigMap.
-
 ```bash
 nano kubernetes/configmap.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/configmap.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get configmap -n enterprise-devops
-
+```
+```bash
 kubectl describe configmap enterprise-config -n enterprise-devops
 ```
-
 ---
-
 ## Step 4 – Create the Secret
 
 Edit the Secret.
-
 ```bash
 nano kubernetes/secret.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/secret.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get secret -n enterprise-devops
-
+```
+```bash
 kubectl describe secret enterprise-secret -n enterprise-devops
 ```
-
 ---
-
 ## Step 5 – Deploy the Application
-
 Edit the Deployment.
-
 ```bash
 nano kubernetes/deployment.yaml
 ```
-
 The Deployment should include:
 
 * Namespace
@@ -680,150 +653,155 @@ The Deployment should include:
 * CPU limits
 
 Apply the Deployment.
-
 ```bash
 kubectl apply -f kubernetes/deployment.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get deployment -n enterprise-devops
-
+```
+```bash
 kubectl get pods -n enterprise-devops
-
+```
+```bash
 kubectl describe deployment enterprise-devops-app -n enterprise-devops
 ```
-
 ---
-
 ## Step 6 – Create the Service
-
 Edit the Service.
-
 ```bash
 nano kubernetes/service.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/service.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get svc -n enterprise-devops
-
+```
+```bash
 kubectl get endpoints -n enterprise-devops
 ```
-
 ---
-
 ## Step 7 – Verify the Application in the Browser
-
 Open the application using the Kubernetes Service.
-
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops
 ```
-
 Or display only the URL.
-
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops --url
 ```
-
 Expected:
 
 * Application opens successfully.
 * HTML, CSS and JavaScript are loaded.
 * Kubernetes Service is working correctly.
-
 ---
-
 ## Step 8 – Configure Ingress
-
 Enable the NGINX Ingress Controller.
-
 ```bash
 minikube addons enable ingress
 ```
-
 Verify.
-
 ```bash
 kubectl get pods -n ingress-nginx
 ```
-
 Expected:
-
 ```text
 ingress-nginx-controller Running
 ```
-
 Edit the Ingress manifest.
-
 ```bash
 nano kubernetes/ingress.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/ingress.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get ingress -n enterprise-devops
-
+```
+```bash
 kubectl describe ingress enterprise-ingress -n enterprise-devops
 ```
-
 Get the Minikube IP.
-
 ```bash
 minikube ip
 ```
-
-Update your hosts file to map the hostname (for example, `enterprise.local`) to the Minikube IP.
-
-Verify the application in the browser.
-
+### step 9
+Open Terminal 1:
+```bash
+minikube tunnel
 ```
+Leave it running.
+
+You already got:
+```bash
+✅ Tunnel successfully started
+```
+### Step 10 : Change hosts file
+
+Open Notepad as Administrator:
+
+C:\Windows\System32\drivers\etc\hosts
+
+Change this:
+
+192.168.49.2 enterprise.local
+
+to:
+```bash
+127.0.0.1 enterprise.local
+```
+Save.
+
+### Step 11: Flush DNS
+
+Open Command Prompt as Administrator:
+```bash
+ipconfig /flushdns
+```
+### Step 12 : Test from Git Bash
+
+Run:
+```bash
+curl -H "Host: enterprise.local" http://127.0.0.1
+```
+If you get your application response, open:
+```bash
 http://enterprise.local
 ```
+in the browser.
 
+
+
+
+------------------------------------------------------
 ---
-
-## Step 9 – Enable Metrics Server
-
+## Step 13– Enable Metrics Server
 Check the Minikube addons.
 
 ```bash
 minikube addons list
 ```
-
 Enable Metrics Server if it is not enabled.
-
 ```bash
 minikube addons enable metrics-server
 ```
-
 Verify.
-
 ```bash
 kubectl top nodes
-
+```
+```bash
 kubectl top pods -n enterprise-devops
 ```
 
 ---
 
-## Step 10 – Create the Horizontal Pod Autoscaler (HPA)
+## Step 14 – Create the Horizontal Pod Autoscaler (HPA)
 
 Edit the HPA manifest.
 
@@ -845,7 +823,7 @@ kubectl get hpa -n enterprise-devops
 
 ---
 
-## Step 11 – Watch the Autoscaler
+## Step 15– Watch the Autoscaler
 
 Open three terminals.
 
@@ -869,7 +847,7 @@ kubectl get pods -n enterprise-devops -w
 
 ---
 
-## Step 12 – Generate Load
+## Step 16 – Generate Load
 
 Run a BusyBox container.
 
@@ -892,7 +870,7 @@ done
 
 ---
 
-## Step 13 – Observe Autoscaling
+## Step 17 – Observe Autoscaling
 
 Watch the HPA increase the number of replicas.
 
@@ -919,7 +897,7 @@ kubectl get pods -n enterprise-devops
 
 ---
 
-## Step 14 – Stop the Load Test
+## Step 18– Stop the Load Test
 
 Inside BusyBox, press:
 
@@ -929,7 +907,7 @@ Ctrl + C
 
 ---
 
-## Step 15 – Observe Scale Down
+## Step 19 – Observe Scale Down
 
 Continue watching the HPA.
 
@@ -957,17 +935,118 @@ The deployment will not scale below:
 ```text
 minReplicas: 2
 ```
-
-
-
-
-
-
-
-
+# Complete Kubernetes traffic flow is now working:
+```bash
+Browser
+   |
+   |  http://enterprise.local
+   |
+Windows hosts file
+   |
+   | 127.0.0.1
+   |
+Minikube tunnel
+   |
+Ingress Controller (nginx)
+   |
+Ingress Rule
+   |
+enterprise-devops-app Service (ClusterIP)
+   |
+Deployment
+   |
+Pods
+```
 ------------------------------------------------------------
+# phase 5 prometheus and grafana monitoring
+Inside your monitoring folder, keep files like:
+```bash
+monitoring/
+│
+├── namespace.yaml
+├── prometheus/
+│   ├── configmap.yaml
+│   ├── deployment.yaml
+│   ├── service.yaml
+│
+└── grafana/
+    ├── deployment.yaml
+    ├── service.yaml
+```
+### Step 1: Create namespace YAML
 
+Go into your project:
+```bash
+cd monitoring
+```
+Create:
+```bash
+touch namespace.yaml
+```
+Add content
 
+Apply:
+```bash
+kubectl apply -f namespace.yaml
+```
+Verify:
+```bash
+kubectl get ns
+```
+You should see:
+```bash
+monitoring   Active
+```
+### Step 2: Create Prometheus folder
+
+You should be inside:
+```bash
+/c/project/enterprise-devops-platform/monitoring
+```
+Create folder:
+```bash
+mkdir prometheus
+```
+Go inside:
+```bash
+cd prometheus
+```
+### Step 2: Create Prometheus ConfigMap
+
+Create file:
+```bash
+touch configmap.yaml
+```
+Add: content 
+```bash
+kubectl apply -f config.yaml
+```
+### Step 3: Create Prometheus Deployment
+```bash
+touch deployment.yaml
+```
+Add: content
+```bash
+kubectl apply -f deployment.yaml
+```
+### Step 4: Create Prometheus Service
+Create:
+```bash
+touch service.yaml
+```
+Add content
+```bash
+kubectl apply -f service.yaml
+```
+### Step 5: Apply Prometheus
+From:
+```bash
+monitoring/prometheus
+```
+Run:
+```bash
+kubectl apply -f .
+```
 ----------------------------------
 
 
