@@ -689,135 +689,100 @@ Verify.
 
 ```bash
 kubectl get deployment -n enterprise-devops
-
+```
+```bash
 kubectl get pods -n enterprise-devops
-
+```
+```bash
 kubectl describe deployment enterprise-devops-app -n enterprise-devops
 ```
-
 ---
-
 ## Step 6 – Create the Service
-
 Edit the Service.
-
 ```bash
 nano kubernetes/service.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/service.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get svc -n enterprise-devops
-
+```
+```bash
 kubectl get endpoints -n enterprise-devops
 ```
-
 ---
-
 ## Step 7 – Verify the Application in the Browser
-
 Open the application using the Kubernetes Service.
-
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops
 ```
-
 Or display only the URL.
-
 ```bash
 minikube service enterprise-devops-app -n enterprise-devops --url
 ```
-
 Expected:
 
 * Application opens successfully.
 * HTML, CSS and JavaScript are loaded.
 * Kubernetes Service is working correctly.
-
 ---
-
 ## Step 8 – Configure Ingress
-
 Enable the NGINX Ingress Controller.
-
 ```bash
 minikube addons enable ingress
 ```
-
 Verify.
-
 ```bash
 kubectl get pods -n ingress-nginx
 ```
-
 Expected:
-
 ```text
 ingress-nginx-controller Running
 ```
-
 Edit the Ingress manifest.
-
 ```bash
 nano kubernetes/ingress.yaml
 ```
-
 Apply it.
-
 ```bash
 kubectl apply -f kubernetes/ingress.yaml
 ```
-
 Verify.
-
 ```bash
 kubectl get ingress -n enterprise-devops
-
+```
+```bash
 kubectl describe ingress enterprise-ingress -n enterprise-devops
 ```
-
 Get the Minikube IP.
-
 ```bash
 minikube ip
 ```
-
 Update your hosts file to map the hostname (for example, `enterprise.local`) to the Minikube IP.
 
 Verify the application in the browser.
-
 ```
 http://enterprise.local
 ```
-
 ---
-
 ## Step 9 – Enable Metrics Server
-
 Check the Minikube addons.
 
 ```bash
 minikube addons list
 ```
-
 Enable Metrics Server if it is not enabled.
-
 ```bash
 minikube addons enable metrics-server
 ```
-
 Verify.
-
 ```bash
 kubectl top nodes
-
+```
+```bash
 kubectl top pods -n enterprise-devops
 ```
 
