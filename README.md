@@ -375,6 +375,97 @@ ssh -T git@github.com
 ```
 
 -----------------------------------------------------------
+# Phase 2 - Create the Project Files
+### Step 1 - Remove Placeholder Files
+```bash
+rm ansible/.gitkeep
+rm app/.gitkeep
+rm docker/.gitkeep
+rm docs/.gitkeep
+rm images/.gitkeep
+rm jenkins/.gitkeep
+rm kubernetes/.gitkeep
+rm monitoring/.gitkeep
+rm scripts/.gitkeep
+rm terraform/.gitkeep
+```bash
+#### Step 2 - Create Application Files
+```bash
+touch app/index.html
+touch app/style.css
+touch app/app.js
+touch app/nginx.conf
+touch app/package.json
+```
+### Step 3 - Create Docker Files
+```bash
+touch docker/Dockerfile
+touch docker/.dockerignore
+```
+### Step 4 - Create Terraform Files
+```bash
+touch terraform/providers.tf
+touch terraform/variables.tf
+touch terraform/main.tf
+touch terraform/outputs.tf
+touch terraform/terraform.tfvars
+```
+### Step 5 - Create Ansible Files
+```bash
+touch ansible/inventory
+touch ansible/install-docker.yml
+touch ansible/install-kubernetes.yml
+touch ansible/deploy-app.yml
+```
+### Step 6 - Create Kubernetes Files
+```bash
+touch kubernetes/namespace.yaml
+touch kubernetes/deployment.yaml
+touch kubernetes/service.yaml
+touch kubernetes/configmap.yaml
+touch kubernetes/secret.yaml
+touch kubernetes/ingress.yaml
+touch kubernetes/hpa.yaml
+```
+### Step 7 - Create Jenkins Pipeline
+```bash
+touch jenkins/Jenkinsfile
+```
+### Step 8 - Create Monitoring Files
+```bash
+touch monitoring/prometheus.yaml
+touch monitoring/grafana.yaml
+touch monitoring/alertmanager.yaml
+```
+### Step 9 - Create Shell Scripts
+```bash
+touch scripts/build.sh
+touch scripts/deploy.sh
+touch scripts/cleanup.sh
+touch scripts/backup.sh
+```
+### Step 10 - Create Documentation Files
+```bash
+touch docs/architecture.md
+touch docs/setup.md
+touch docs/troubleshooting.md
+touch README.md
+```
+### Step 11 - Verify the Project Structure
+```bash
+find .
+#### Step 12 - Check Tracked Files
+git ls-files
+### Step 13 - Check Git Status
+git status
+### Step 14 - Stage All Files
+git add .
+### Step 15 - Commit the Changes
+git commit -m "Add initial project files"
+###b Step 16 - Push to GitHub
+git push
+```
+-----------------------------------------------------------------------------
 #  Phase 3 Completed
 
 ### Files created in the app directory and added content and pushed to github
