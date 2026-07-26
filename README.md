@@ -997,7 +997,56 @@ You should see:
 ```bash
 monitoring   Active
 ```
+### Step 2: Create Prometheus folder
 
+You should be inside:
+```bash
+/c/project/enterprise-devops-platform/monitoring
+```
+Create folder:
+```bash
+mkdir prometheus
+```
+Go inside:
+```bash
+cd prometheus
+```
+### Step 2: Create Prometheus ConfigMap
+
+Create file:
+```bash
+touch configmap.yaml
+```
+Add: content 
+```bash
+kubectl apply -f config.yaml
+```
+### Step 3: Create Prometheus Deployment
+```bash
+touch deployment.yaml
+```
+Add: content
+```bash
+kubectl apply -f deployment.yaml
+```
+### Step 4: Create Prometheus Service
+Create:
+```bash
+touch service.yaml
+```
+Add content
+```bash
+kubectl apply -f service.yaml
+```
+### Step 5: Apply Prometheus
+From:
+```bash
+monitoring/prometheus
+```
+Run:
+```bash
+kubectl apply -f .
+```
 ----------------------------------
 
 
