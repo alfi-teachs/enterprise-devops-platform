@@ -935,9 +935,28 @@ The deployment will not scale below:
 ```text
 minReplicas: 2
 ```
-
-
-
+# Complete Kubernetes traffic flow is now working:
+```bash
+Browser
+   |
+   |  http://enterprise.local
+   |
+Windows hosts file
+   |
+   | 127.0.0.1
+   |
+Minikube tunnel
+   |
+Ingress Controller (nginx)
+   |
+Ingress Rule
+   |
+enterprise-devops-app Service (ClusterIP)
+   |
+Deployment
+   |
+Pods
+```
 
 
 
