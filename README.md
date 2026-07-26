@@ -1047,103 +1047,102 @@ Run:
 ```bash
 kubectl apply -f .
 ```
-Step 6: Verify
-
+### Step 6: Verify
 Check pod:
-
+```bash
 kubectl get pods -n monitoring
-
+```
 Expected:
-
+```bash
 prometheus-xxxxx   Running
-
+```
 Check service:
-
+```bash
 kubectl get svc -n monitoring
-
+```
 Expected:
-
+```bash
 prometheus   ClusterIP   9090/TCP
-
-Step 7: Access Prometheus UI
-
+```
+### Step 7: Access Prometheus UI
 Your service is ClusterIP, so it is only accessible inside Kubernetes.
 
 Use port-forward:
-
+```bash
 kubectl port-forward svc/prometheus 9090:9090 -n monitoring
-
+```
 Keep this terminal open.
 
 You should see:
-
+```bash
 Forwarding from 127.0.0.1:9090 -> 9090
-
+```
 Open browser:
-
+```bash
 http://localhost:9090
-
+```
 You should see the Prometheus dashboard.
 
-Step 8: Check Prometheus Targets
-
+### Step 8: Check Prometheus Targets
 In Prometheus UI:
 
 Go to:
 
 Status → Targets
-
-You should see:
-
-prometheus
-
-with status:
-
-UP
-
-Step 9: Deploy kube-state-metrics
+```bash
+You should see:   prometheus
+```
+```bash
+with status:     UP
+```
+### Step 9: Deploy kube-state-metrics
 
 Create folder:
 
 From:
-
+```bash
 /c/project/enterprise-devops-platform/monitoring
-
+```
 Run:
-
+```bash
 mkdir kube-state-metrics
 cd kube-state-metrics
-
+```
 Create:
-
+```bash
 touch deployment.yaml
-
-Add:
-
+```
+Add:content 
+```bash
+kubectl apply -f deployment.yaml
+```
 Create service:
-
+```bash
 touch service.yaml
-
-Add:
-
+```
+Add: content
+```bash
+kubectl apply -f service.yaml
+```
 Verify:
-
+```bash
 kubectl get pods -n monitoring
-
+```
 You should see:
-
+```bash
 prometheus-xxxxx              Running
 kube-state-metrics-xxxxx      Running
-
+```
 After this we will update Prometheus configmap.yaml to scrape:
-
+```bash
 kube-state-metrics:8080
-
+```
 Then you will see Kubernetes metrics like:
-
+```bash
 kube_deployment_status_replicas
 kube_pod_status_phase
 kube_namespace_status_phase
+```
 ----------------------------------
 
 
