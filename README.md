@@ -498,17 +498,12 @@ Expected Output
 REPOSITORY               TAG
 enterprise-devops-app    v1
 ### Step 7 - Run the Container
+```bash
 docker run -d \
 --name enterprise-devops-container \
 -p 8080:80 \
 enterprise-devops-app:v1
-
-Windows Git Bash
-
-docker run -d ^
---name enterprise-devops-container ^
--p 8080:80 ^
-enterprise-devops-app:v1
+```
 ### Step 8 - Verify the Container
 docker ps
 ### Step 9 - Test the Application
