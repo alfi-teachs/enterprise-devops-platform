@@ -359,7 +359,7 @@ rm monitoring/.gitkeep
 rm scripts/.gitkeep
 rm terraform/.gitkeep
 ```bash
-#### Step 2 - Create Application Files
+### Step 2 - Create Application Files
 ```bash
 touch app/index.html
 touch app/style.css
@@ -451,27 +451,25 @@ style.css
 nginx.conf
 package.json
 ### Step 3 - Create the Dockerfile
+```bash
 nano docker/Dockerfile
-
+```
 Paste:
-
+```bash
 FROM nginx:alpine
-
 COPY app/index.html /usr/share/nginx/html/
 COPY app/style.css /usr/share/nginx/html/
 COPY app/app.js /usr/share/nginx/html/
-
 COPY app/nginx.conf /etc/nginx/conf.d/default.conf
-
 EXPOSE 80
-
 CMD ["nginx","-g","daemon off;"]
-
+```
 Save and exit.
 
 ### Step 4 - Create the .dockerignore File
+```bash
 nano docker/.dockerignore
-
+```
 Paste:
 
 .git
@@ -489,10 +487,13 @@ images
 Save and exit.
 
 #### Step 5 - Build the Docker Image
+```bash
 docker build -t enterprise-devops-app:v1 -f docker/Dockerfile .
+```
 ### Step 6 - Verify the Image
+```bash
 docker images
-
+```
 Expected Output
 
 REPOSITORY               TAG
@@ -601,70 +602,78 @@ nano kubernetes/configmap.yaml
 kubectl apply -f kubernetes/configmap.yaml
 ```
 Verify.
-
+```bash
 kubectl get configmap -n enterprise-devops
-
+```
+```bash
 kubectl describe configmap enterprise-config -n enterprise-devops
-Step 4 - Create the Secret
+```
+### Step 4 - Create the Secret
 
 Edit the Secret.
-
+```bash
 nano kubernetes/secret.yaml
-
+```
 Apply it.
-
+```bash
 kubectl apply -f kubernetes/secret.yaml
-
+```
 Verify.
-
+```bash
 kubectl get secret -n enterprise-devops
-
+```
+```bash
 kubectl describe secret enterprise-secret -n enterprise-devops
-Step 5 - Deploy the Application
+```
+### Step 5 - Deploy the Application
 
 Edit the Deployment.
-
+```bash
 nano kubernetes/deployment.yaml
-
+```
 Your Deployment should include:
-
+```bash
 Namespace
 Docker image
 ConfigMap
 Secret
 CPU requests and limits
 Replica count
-
+```
 Apply it.
-
+```bash
 kubectl apply -f kubernetes/deployment.yaml
-
+```
 Verify.
-
+```bash
 kubectl get deployment -n enterprise-devops
-
+```
+```bash
 kubectl get pods -n enterprise-devops
-
+```
+```bash
 kubectl describe deployment enterprise-devops-app -n enterprise-devops
-Step 6 - Expose the Application
-
+```
+### Step 6 - Expose the Application
 Edit the Service.
-
+```bash
 nano kubernetes/service.yaml
-
+```
 Apply it.
-
+```bash
 kubectl apply -f kubernetes/service.yaml
-
+```
 Verify.
-
+```bash
 kubectl get svc -n enterprise-devops
-
+```
+```bash
 kubectl get endpoints -n enterprise-devops
-
+```
 Open the application.
-
+```bash
 minikube service enterprise-devops-app -n enterprise-devops
+```
 ### Step 7 - Configure Ingress
 
 Enable the NGINX Ingress Controller.
@@ -699,7 +708,6 @@ minikube ip
 Open the application using your configured hostname (for example, enterprise.local) after mapping it in your hosts file.
 
 ### Step 8 - Enable Metrics Server
-
 Check the addon status.
 ```bash
 minikube addons list
@@ -795,64 +803,9 @@ minReplicas: 2
 ----------------------------------
 
 
-### Phase 3 – Create ConfigMap
 
-configmap.yaml
-Apply:
-```bash
-kubectl apply -f configmap.yaml
-```
-Verify:
-```bash
-kubectl get configmap -n enterprise-devops
-kubectl describe configmap enterprise-config -n enterprise-devops
-```
-## Phase 4 – Create Secret
-secret.yaml
-Apply:
-```bash
-kubectl apply -f secret.yaml
-```
-Verify:
-```bash
-kubectl get secret -n enterprise-devops
-kubectl describe secret enterprise-secret -n enterprise-devops
-```
-### Phase 5 – Create Deployment
-Your Deployment includes:
-- Namespace
-- Image
-- ConfigMap
-- Secret
-- CPU requests/limits (required for HPA)
-
-Apply:
-```bash
-kubectl apply -f deployment.yaml
-```
-Verify:
-```bash
-kubectl get deployment -n enterprise-devops
-kubectl get pods -n enterprise-devops
-```
-### Phase 6 – Create Service
-service.yaml
-type: NodePort
-Apply:
-```bash
-kubectl apply -f service.yaml
-```
-Verify:
-```bash
-kubectl get svc -n enterprise-devops
-kubectl get endpoints -n enterprise-devops
-```
-Open the application:
-```bash
-minikube service enterprise-devops-app -n enterprise-devops
-```
 --------------------------------------
-### phase 7
+# phase 7
 ## Ingress Setup (Production Style)
 ### Step 1: Install Nginx Ingress Controller
 Enable:
