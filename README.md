@@ -472,18 +472,17 @@ nano docker/.dockerignore
 ```
 Paste:
 
-.git
-.gitignore
-README.md
-docs
-terraform
-ansible
-jenkins
-kubernetes
-monitoring
-scripts
-images
-
+- .git
+- .gitignore
+- README.md
+- docs
+- terraform
+- ansible
+- jenkins
+- kubernetes
+- monitoring
+- scripts
+- images
 Save and exit.
 
 #### Step 5 - Build the Docker Image
