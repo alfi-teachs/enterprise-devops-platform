@@ -505,51 +505,73 @@ docker run -d \
 enterprise-devops-app:v1
 ```
 ### Step 8 - Verify the Container
+```bash
 docker ps
+```
 ### Step 9 - Test the Application
-
 Open
-
+```bash
 http://localhost:8080
+```
 -------------------------------------
 ### Step 10 - Check Container Logs
+```bash
 docker logs enterprise-devops-container
+```
 ### Step 11 - Stop the Container
+```bash
 docker stop enterprise-devops-container
+```
 ### Step 12 - Start the Container
+```bash
 docker start enterprise-devops-container
+```
 ### Step 13 - Remove the Container
+```bash
 docker stop enterprise-devops-container
-
+```
+```bash
 docker rm enterprise-devops-container
-Docker Hub
+```
+# Docker Hub
 ### Step 14 - Login to Docker Hub
+```bash
 docker login
+````
 ### Step 15 - Tag the Image
 
 Replace YOUR_DOCKERHUB_USERNAME with your Docker Hub username.
-
+```bash
 docker tag enterprise-devops-app:v1 YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
-
+```
 Example:
-
+```bash
 docker tag enterprise-devops-app:v1 alskill/enterprise-devops-app:v1
+```
 ### Step 16 - Push the Image
+```bash
 docker push YOUR_DOCKERHUB_USERNAME/enterprise-devops-app:v1
-
+```
 Example:
-
+```bash
 docker push alskill/enterprise-devops-app:v1
+```
 ### Step 17 - Verify the Image
 
 Visit your Docker Hub repository and confirm that the image is available.
 
 ### Step 18 - Save Your Changes
+```bash
 git add .
 
 git commit -m "Add Docker configuration"
-
+```
+```bash
+git pull
+```
+```bash
 git push
+```
 ----------------------------------------
 # Phase 5 – Kubernetes (Minikube)
 
